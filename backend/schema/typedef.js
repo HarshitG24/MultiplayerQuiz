@@ -9,8 +9,20 @@ const typeDefs = `
         message: String!,
     }
 
+    type Question {
+        question: String!,
+        ans: String!
+        options: [String!]!
+    }
+
+    type Questions {
+        category: String!
+        questions: [Question!]!
+    }
+
     type Query {
         users: [User!]
+        questions: [Questions!]!
     }
 
     type Mutation {

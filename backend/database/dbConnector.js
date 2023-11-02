@@ -8,6 +8,7 @@ const client = new MongoClient(MONGO_URL, {});
 
 const db = client.db("GraphQL");
 const users = db.collection("users");
+const categories = db.collection("categories");
 
 async function hashPassword(plaintextPassword) {
   const hash = await bcrypt.hash(plaintextPassword, 10);
@@ -83,6 +84,37 @@ function dbConnector() {
       return {
         statusCode: 400,
         message: error,
+      };
+    }
+  };
+
+  dbObj.addQuestions = async (data) => {
+    await client.connect();
+    try {
+      await categories.insertOne(data);
+      return 200;
+    } catch (error) {
+      console.log(error);
+      return 400;
+    } finally {
+      // client.close();
+    }
+  };
+
+  dbObj.getQuestions = async () => {
+    await client.connect();
+
+    try {
+      const resp = await categories.find().toArray();
+
+      return {
+        questionBank: resp.length > 0 ? resp : [],
+        statusCode: 200,
+      };
+    } catch (error) {
+      return {
+        questionBank: [],
+        statusCode: 400,
       };
     }
   };

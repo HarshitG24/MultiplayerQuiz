@@ -6,6 +6,13 @@ const resolvers = {
       const userData = await dbConnector.allUsers();
       return userData;
     },
+
+    async questions(_, args) {
+      const resp = await dbConnector.getQuestions();
+      const questions = resp.questionBank;
+
+      return questions;
+    },
   },
   Mutation: {
     async signup(_, args) {

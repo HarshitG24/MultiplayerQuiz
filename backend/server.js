@@ -11,6 +11,7 @@ import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
 import typeDefs from "./schema/typedef.js";
 import resolvers from "./schema/resolver.js";
+import indexRouter from "./routes/index.js";
 
 const corsOptions = {
   origin: "*",
@@ -24,6 +25,7 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/", indexRouter);
 
 // creating server instance
 const httpServer = createServer(app);
