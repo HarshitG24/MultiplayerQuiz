@@ -1,0 +1,20 @@
+.categories-container {
+  display: flex;
+  flex-direction: column;
+  /* 70% wide of its container, and it has a top and bottom margin of 2rem each, with left and right margins automatically adjusted to center the element horizontally. */
+  width: 70%;
+  margin: 2rem auto;
+}
+
+.all-categories {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+h3 {
+  color: #fbd392;
+}

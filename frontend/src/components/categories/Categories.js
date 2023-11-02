@@ -1,5 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
+import "./categories.css";
+import CategoryCard from "./CategoryCard";
 
 const categories = gql`
   query {
@@ -11,14 +13,19 @@ const categories = gql`
 
 export default function Categories() {
   const { loading, error, data } = useQuery(categories);
-  console.log("cat data is: ", data);
 
   if (loading) return "Loading..";
   if (error) return `${error.message}`;
 
   return (
-    <div>
-      <ul>{data && data.questions.map((q) => <li>{q.category}</li>)}</ul>
+    <div className="categories-container">
+      <h2>Categories</h2>
+      <div className="all-categories">
+        {data &&
+          data.questions.map((question) => (
+            <CategoryCard question={question} />
+          ))}
+      </div>
     </div>
   );
 }
