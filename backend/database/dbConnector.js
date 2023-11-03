@@ -119,6 +119,29 @@ function dbConnector() {
     }
   };
 
+  dbObj.questionByCategory = async (data = { category: "" }) => {
+    await client.connect();
+    console.log("the data here is:", data);
+    try {
+      const questions = await categories
+        .aggregate([
+          { $match: { category: data.category } },
+          { $unwind: { path: "$questions" } },
+          { $sample: { size: 2 } },
+          {
+            $replaceRoot: {
+              newRoot: "$questions",
+            },
+          },
+        ])
+        .toArray();
+
+      return questions;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return dbObj;
 }
 

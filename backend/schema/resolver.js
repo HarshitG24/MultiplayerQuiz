@@ -13,6 +13,10 @@ const resolvers = {
 
       return questions;
     },
+    async fetchQuestions(_, { category }) {
+      const ans = await dbConnector.questionByCategory({ category });
+      return ans;
+    },
   },
   Mutation: {
     async signup(_, args) {

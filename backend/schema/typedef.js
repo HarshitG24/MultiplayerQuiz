@@ -23,6 +23,7 @@ const typeDefs = `
     type Query {
         users: [User!]
         questions: [Questions!]!
+        fetchQuestions(category: String!): [Question!]!
     }
 
     type Mutation {
