@@ -28,6 +28,13 @@ const resolvers = {
       const userData = await dbConnector.login(args);
       return userData;
     },
+    async startGame(_, args) {
+      const response = await dbConnector.startGame(args);
+      return {
+        email: response.email,
+        password: "",
+      };
+    },
   },
 };
 

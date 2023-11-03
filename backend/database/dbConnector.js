@@ -9,6 +9,7 @@ const client = new MongoClient(MONGO_URL, {});
 const db = client.db("GraphQL");
 const users = db.collection("users");
 const categories = db.collection("categories");
+const gameRoom = db.collection("room");
 
 async function hashPassword(plaintextPassword) {
   const hash = await bcrypt.hash(plaintextPassword, 10);
@@ -139,6 +140,29 @@ function dbConnector() {
       return questions;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  dbObj.startGame = async (data = { email: "", category: "", code: "" }) => {
+    await client.connect();
+
+    try {
+      await gameRoom.insertOne({
+        category: data.category,
+        users: [{ email: data.email }],
+        code: data.code,
+      });
+
+      return {
+        email: data.email,
+        status: 200,
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        email: "",
+        status: 400,
+      };
     }
   };
 
