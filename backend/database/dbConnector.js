@@ -149,38 +149,53 @@ function dbConnector() {
     try {
       await gameRoom.insertOne({
         category: data.category,
-        users: [{ email: data.email }],
+        users: [data.email],
         code: data.code,
       });
 
-      return {
-        email: data.email,
+      let obj = {
+        category: data.category,
+        users: [data.email],
+        code: data.code,
         status: 200,
       };
+
+      console.log("start game obj", obj);
+
+      return obj;
     } catch (error) {
       console.error(error);
       return {
-        email: "",
+        category: "",
+        users: "",
+        code: "",
         status: 400,
       };
     }
   };
 
-  dbObj.joinGame = async (data = { code: "" }) => {
+  dbObj.joinGame = async (data = { code: "", email: "" }) => {
     await client.connect();
-
+    const { code, email } = data;
     try {
-      const resp = await gameRoom.find({ code: data.code }).toArray();
+      const resp = await gameRoom.findOneAndUpdate(
+        { code },
+        { $addToSet: { users: email } },
+        { returnDocument: "after" }
+      );
+
       return {
-        email: resp.length > 0 ? resp[0].users[0].email : "",
-        status: 200,
+        code: resp.code,
+        users: resp.users,
+        category: resp.category,
       };
     } catch (error) {
-      console.log(error);
+      console.log("error is: ", error);
 
       return {
-        email: "",
-        status: 400,
+        code: "",
+        users: "",
+        category: "",
       };
     }
   };

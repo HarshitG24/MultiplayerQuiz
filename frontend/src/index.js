@@ -17,6 +17,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Categories from "./components/categories/Categories";
 import Quiz from "./components/Quiz/Quiz";
+import Waiting from "./components/Quiz/Waiting";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
   {
     path: "/quiz",
     element: <Quiz />,
+  },
+  {
+    path: "/waiting",
+    element: <Waiting />,
   },
 ]);
 

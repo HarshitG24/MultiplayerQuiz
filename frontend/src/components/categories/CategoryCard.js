@@ -1,8 +1,35 @@
+import { gql, useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/dream-gown.jpg";
 import "./CategoryCard.css";
 
+const START_GAME = gql`
+  mutation ($email: String!, $category: String!, $code: Int!) {
+    startGame(email: $email, category: $category, code: $code) {
+      users
+      code
+      category
+    }
+  }
+`;
+
+const JOIN_GAME = gql`
+  mutation ($code: Int!, $email: String!) {
+    joinGame(code: $code, email: $email) {
+      code
+      category
+      users
+    }
+  }
+`;
+
 export default function CategoryCard({ question }) {
+  const nav = useNavigate();
+
+  const [joinResp] = useMutation(JOIN_GAME);
+  const [startResp] = useMutation(START_GAME);
+
   const { category } = question;
   const [style, setStyle] = useState({ display: "none" });
 
@@ -15,9 +42,25 @@ export default function CategoryCard({ question }) {
 
   function handleJoinGame(event) {
     event.preventDefault();
+
+    joinResp({
+      variables: {
+        code: 1234,
+        email: "qaz@wsx.com",
+      },
+    });
   }
+
   function handleStartGame(event) {
     event.preventDefault();
+
+    startResp({
+      variables: {
+        code: 1234,
+        email: "wsx@wsx.com",
+        category: "World Capital",
+      },
+    });
   }
 
   return (

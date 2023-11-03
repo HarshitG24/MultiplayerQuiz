@@ -1,4 +1,8 @@
 import dbConnector from "../database/dbConnector.js";
+import { PubSub } from "graphql-subscriptions";
+
+const pubSub = new PubSub();
+const CODE = "1234";
 
 const resolvers = {
   Query: {
@@ -29,21 +33,34 @@ const resolvers = {
       return userData;
     },
     async startGame(_, args) {
-      const response = await dbConnector.startGame(args);
+      const { category, users, code } = await dbConnector.startGame(args);
+      startGameSubScription({ category, users, code });
       return {
-        email: response.email,
-        password: "",
+        category: category,
+        users: users,
+        code: code,
       };
     },
 
     async joinGame(_, args) {
       const response = await dbConnector.joinGame(args);
-      return {
-        email: response.email,
-        password: "",
-      };
+      startGameSubScription(response);
+      return response;
     },
   },
+
+  Subscription: {
+    gameOn: {
+      subscribe: (_, { code }) => pubSub.asyncIterator(code.toString()),
+    },
+  },
+};
+
+const startGameSubScription = ({ users, code, category }) => {
+  console.log("the sub here: ", users, code, category);
+  pubSub.publish(code.toString(), {
+    gameOn: { users, code, category },
+  });
 };
 
 export default resolvers;
