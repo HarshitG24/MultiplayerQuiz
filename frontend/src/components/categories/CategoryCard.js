@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useSubscription } from "@apollo/client";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/dream-gown.jpg";
@@ -24,13 +24,26 @@ const JOIN_GAME = gql`
   }
 `;
 
-export default function CategoryCard({ question }) {
-  const nav = useNavigate();
+const GAME_SUBSCRIPTION = gql`
+  subscription ($code: Int!) {
+    gameOn(code: $code) {
+      code
+      category
+      users
+    }
+  }
+`;
 
+export default function CategoryCard({ data }) {
+  const nav = useNavigate();
   const [joinResp] = useMutation(JOIN_GAME);
   const [startResp] = useMutation(START_GAME);
+  const subData = useSubscription(GAME_SUBSCRIPTION, {
+    variables: { code: 1234 },
+  });
 
-  const { category } = question;
+  const [chosenCategory, setChosenVCategory] = useState("");
+
   const [style, setStyle] = useState({ display: "none" });
 
   function handleMouseEnter() {
@@ -40,7 +53,7 @@ export default function CategoryCard({ question }) {
     setStyle((style) => ({ ...style, display: "none" }));
   }
 
-  function handleJoinGame(event) {
+  function handleJoinGame(event, category) {
     event.preventDefault();
 
     joinResp({
@@ -48,45 +61,61 @@ export default function CategoryCard({ question }) {
         code: 1234,
         email: "qaz@wsx.com",
       },
+    }).then(() => {
+      setChosenVCategory(category);
     });
   }
 
-  function handleStartGame(event) {
+  function handleStartGame(event, category) {
     event.preventDefault();
 
     startResp({
       variables: {
         code: 1234,
         email: "wsx@wsx.com",
-        category: "World Capital",
+        category,
       },
+    }).then(() => {
+      setChosenVCategory(category);
     });
   }
 
+  if (subData !== undefined && subData?.data?.gameOn?.users?.length === 2) {
+    nav("/quiz", { state: { category: chosenCategory } });
+  }
+
   return (
-    <div
-      className="product"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseExit}>
-      <img src={logo} alt="This is the topic illustration" />
-      <div className="category-details">
-        <h3>{category}</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod debitis
-          esse voluptatem commodi modi reprehenderit vitae iusto harum! Nulla,
-          fugit repudiandae! Numquam nihil voluptas perspiciatis ex praesentium,
-          qui nobis corrupti?
-        </p>
-      </div>
-      <div
-        className={`game-options ${
-          style.display === "none"
-            ? "game-option-no-display"
-            : "game-option-display"
-        }`}>
-        <button onClick={handleJoinGame}>Join</button>
-        <button onClick={handleStartGame}>Start</button>
-      </div>
-    </div>
+    <>
+      {data &&
+        data.questions.map(({ category }) => (
+          <div
+            className="product"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseExit}>
+            {" "}
+            <img src={logo} alt="This is the topic illustration" />
+            <div className="category-details">
+              <h3>{category}</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
+                debitis esse voluptatem commodi modi reprehenderit vitae iusto
+                harum! Nulla, fugit repudiandae! Numquam nihil voluptas
+                perspiciatis ex praesentium, qui nobis corrupti?
+              </p>
+            </div>
+            <div
+              className={`game-options ${
+                style.display === "none"
+                  ? "game-option-no-display"
+                  : "game-option-display"
+              }`}>
+              <button onClick={(e) => handleJoinGame(e, category)}>Join</button>
+              <button onClick={(e) => handleStartGame(e, category)}>
+                Start
+              </button>
+            </div>
+          </div>
+        ))}
+    </>
   );
 }

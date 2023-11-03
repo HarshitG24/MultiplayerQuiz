@@ -57,7 +57,6 @@ const resolvers = {
 };
 
 const startGameSubScription = ({ users, code, category }) => {
-  console.log("the sub here: ", users, code, category);
   pubSub.publish(code.toString(), {
     gameOn: { users, code, category },
   });

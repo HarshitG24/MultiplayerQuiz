@@ -122,13 +122,12 @@ function dbConnector() {
 
   dbObj.questionByCategory = async (data = { category: "" }) => {
     await client.connect();
-    console.log("the data here is:", data);
     try {
       const questions = await categories
         .aggregate([
           { $match: { category: data.category } },
           { $unwind: { path: "$questions" } },
-          { $sample: { size: 2 } },
+          { $sample: { size: 5 } },
           {
             $replaceRoot: {
               newRoot: "$questions",
@@ -159,8 +158,6 @@ function dbConnector() {
         code: data.code,
         status: 200,
       };
-
-      console.log("start game obj", obj);
 
       return obj;
     } catch (error) {
