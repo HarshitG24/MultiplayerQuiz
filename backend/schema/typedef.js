@@ -30,6 +30,7 @@ const typeDefs = `
         signup(email: String!, password: String!): User!
         login(email: String!, password: String!): ApiResponse!
         startGame(email: String!, category: String!, code: Int!): User!
+        joinGame(code: Int!): User!
     }
 `;
 

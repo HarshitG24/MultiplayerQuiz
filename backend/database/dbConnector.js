@@ -166,6 +166,25 @@ function dbConnector() {
     }
   };
 
+  dbObj.joinGame = async (data = { code: "" }) => {
+    await client.connect();
+
+    try {
+      const resp = await gameRoom.find({ code: data.code }).toArray();
+      return {
+        email: resp.length > 0 ? resp[0].users[0].email : "",
+        status: 200,
+      };
+    } catch (error) {
+      console.log(error);
+
+      return {
+        email: "",
+        status: 400,
+      };
+    }
+  };
+
   return dbObj;
 }
 

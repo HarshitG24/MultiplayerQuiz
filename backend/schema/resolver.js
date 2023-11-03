@@ -35,6 +35,14 @@ const resolvers = {
         password: "",
       };
     },
+
+    async joinGame(_, args) {
+      const response = await dbConnector.joinGame(args);
+      return {
+        email: response.email,
+        password: "",
+      };
+    },
   },
 };
 
