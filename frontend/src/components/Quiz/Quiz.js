@@ -15,7 +15,8 @@ const FETCH_QUESTIONS = gql`
 
 export default function Quiz() {
   const location = useLocation();
-  const category = location.state?.category;
+  const { category, user } = location.state;
+  console.log("the user is: ", user);
   const { data, loading, error } = useQuery(FETCH_QUESTIONS, {
     variables: { category },
   });

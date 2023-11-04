@@ -150,6 +150,10 @@ function dbConnector() {
         category: data.category,
         users: [data.email],
         code: data.code,
+        score1: 0,
+        score2: 0,
+        usr1Ans: null,
+        usr2Ans: null,
       });
 
       let obj = {
@@ -180,6 +184,8 @@ function dbConnector() {
         { $addToSet: { users: email } },
         { returnDocument: "after" }
       );
+
+      console.log("the resp is: ", resp);
 
       return {
         code: resp.code,

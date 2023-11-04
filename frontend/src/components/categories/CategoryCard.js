@@ -43,6 +43,7 @@ export default function CategoryCard({ data }) {
   });
 
   const [chosenCategory, setChosenVCategory] = useState("");
+  const [userName, setUsername] = useState("");
 
   const [style, setStyle] = useState({ display: "none" });
 
@@ -61,9 +62,14 @@ export default function CategoryCard({ data }) {
         code: 1234,
         email: "qaz@wsx.com",
       },
-    }).then(() => {
-      setChosenVCategory(category);
-    });
+    })
+      .then(() => {
+        setChosenVCategory(category);
+        setUsername("user2");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   function handleStartGame(event, category) {
@@ -77,11 +83,12 @@ export default function CategoryCard({ data }) {
       },
     }).then(() => {
       setChosenVCategory(category);
+      setUsername("user1");
     });
   }
 
   if (subData !== undefined && subData?.data?.gameOn?.users?.length === 2) {
-    nav("/quiz", { state: { category: chosenCategory } });
+    nav("/quiz", { state: { category: chosenCategory, user: userName } });
   }
 
   return (
