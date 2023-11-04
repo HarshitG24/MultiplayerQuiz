@@ -2,6 +2,8 @@ import { gql, useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginCard.css";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/slices/auth-slice";
 
 const LOGIN = gql`
   mutation Login($email: String!, $password: String!) {
@@ -12,7 +14,9 @@ const LOGIN = gql`
   }
 `;
 
-export default function LoginCard() {
+function LoginCard() {
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState({ email: "", password: "" });
   const [addUser] = useMutation(LOGIN);
   const navigate = useNavigate();
@@ -35,6 +39,7 @@ export default function LoginCard() {
       variables: { email, password },
     })
       .then(() => {
+        dispatch(authActions.setEmail(email));
         navigate("/categories");
       })
       .catch((err) => {
@@ -80,3 +85,5 @@ export default function LoginCard() {
     </div>
   );
 }
+
+export default LoginCard;

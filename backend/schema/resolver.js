@@ -2,7 +2,7 @@ import dbConnector from "../database/dbConnector.js";
 import { PubSub } from "graphql-subscriptions";
 
 const pubSub = new PubSub();
-const CODE = "1234";
+const CODE = "5678";
 
 const resolvers = {
   Query: {
@@ -20,6 +20,11 @@ const resolvers = {
     async fetchQuestions(_, { category }) {
       const ans = await dbConnector.questionByCategory({ category });
       return ans;
+    },
+
+    async fetchCategory(_, args) {
+      const category = await dbConnector.getCategory(args);
+      return category;
     },
   },
   Mutation: {
@@ -45,6 +50,11 @@ const resolvers = {
     async joinGame(_, args) {
       const response = await dbConnector.joinGame(args);
       startGameSubScription(response);
+      return response;
+    },
+
+    async addAnswer(_, args) {
+      const response = await dbConnector.updateAnswer(args);
       return response;
     },
   },

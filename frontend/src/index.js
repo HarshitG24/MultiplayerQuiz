@@ -17,6 +17,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Categories from "./components/categories/Categories";
 import Quiz from "./components/Quiz/Quiz";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -65,7 +67,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ApolloProvider client={client}>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </ApolloProvider>
 );
 

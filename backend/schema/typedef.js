@@ -26,10 +26,16 @@ const typeDefs = `
         questions: [Question!]!
     }
 
+    type Answer {
+        question: Int!
+        answer: String!
+    }
+
     type Query {
         users: [User!]
         questions: [Questions!]!
         fetchQuestions(category: String!): [Question!]!
+        fetchCategory(code: Int!): String!
     }
 
     type Mutation {
@@ -37,6 +43,7 @@ const typeDefs = `
         login(email: String!, password: String!): ApiResponse!
         startGame(email: String!, category: String!, code: Int!): Game!
         joinGame(code: Int!, email: String!): Game!
+        addAnswer(code: Int!, user: String!, answer: String!, score: Int!, question: Int!): ApiResponse!
     }
 
     type Subscription {

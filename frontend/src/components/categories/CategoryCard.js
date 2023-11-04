@@ -1,7 +1,9 @@
 import { gql, useMutation, useSubscription } from "@apollo/client";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/dream-gown.jpg";
+import { categoryActions } from "../../store/slices/category-slice";
 import "./CategoryCard.css";
 
 const START_GAME = gql`
@@ -36,36 +38,36 @@ const GAME_SUBSCRIPTION = gql`
 
 export default function CategoryCard({ data }) {
   const nav = useNavigate();
+  const dispatch = useDispatch();
+  const email = useSelector((state) => state.auth.email);
+
   const [joinResp] = useMutation(JOIN_GAME);
   const [startResp] = useMutation(START_GAME);
   const subData = useSubscription(GAME_SUBSCRIPTION, {
-    variables: { code: 1234 },
+    variables: { code: 5678 },
   });
-
-  const [chosenCategory, setChosenVCategory] = useState("");
-  const [userName, setUsername] = useState("");
 
   const [style, setStyle] = useState({ display: "none" });
 
-  function handleMouseEnter() {
-    setStyle((style) => ({ ...style, display: "yes" }));
-  }
-  function handleMouseExit() {
-    setStyle((style) => ({ ...style, display: "none" }));
-  }
+  // function handleMouseEnter() {
+  //   setStyle((style) => ({ ...style, display: "yes" }));
+  // }
+  // function handleMouseExit() {
+  //   setStyle((style) => ({ ...style, display: "none" }));
+  // }
 
   function handleJoinGame(event, category) {
     event.preventDefault();
 
     joinResp({
       variables: {
-        code: 1234,
+        code: 5678,
         email: "qaz@wsx.com",
       },
     })
       .then(() => {
-        setChosenVCategory(category);
-        setUsername("user2");
+        dispatch(categoryActions.addCategory(category));
+        dispatch(categoryActions.setUser("user2"));
       })
       .catch((error) => {
         console.error(error);
@@ -77,28 +79,25 @@ export default function CategoryCard({ data }) {
 
     startResp({
       variables: {
-        code: 1234,
+        code: 5678,
         email: "wsx@wsx.com",
         category,
       },
     }).then(() => {
-      setChosenVCategory(category);
-      setUsername("user1");
+      dispatch(categoryActions.addCategory(category));
+      dispatch(categoryActions.setUser("user1"));
     });
   }
 
   if (subData !== undefined && subData?.data?.gameOn?.users?.length === 2) {
-    nav("/quiz", { state: { category: chosenCategory, user: userName } });
+    nav("/quiz");
   }
 
   return (
     <>
       {data &&
         data.questions.map(({ category }) => (
-          <div
-            className="product"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseExit}>
+          <div className="product">
             {" "}
             <img src={logo} alt="This is the topic illustration" />
             <div className="category-details">
@@ -111,11 +110,13 @@ export default function CategoryCard({ data }) {
               </p>
             </div>
             <div
-              className={`game-options ${
-                style.display === "none"
-                  ? "game-option-no-display"
-                  : "game-option-display"
-              }`}>
+              className="game-options"
+              // ${
+              //   style.display === "none"
+              //     ? "game-option-no-display"
+              //     : "game-option-display"
+              // }`}
+            >
               <button onClick={(e) => handleJoinGame(e, category)}>Join</button>
               <button onClick={(e) => handleStartGame(e, category)}>
                 Start

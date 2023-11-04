@@ -120,6 +120,19 @@ function dbConnector() {
     }
   };
 
+  dbObj.getCategory = async ({ code }) => {
+    await client.connect();
+
+    try {
+      const res = await gameRoom.find({ code }).toArray();
+
+      console.log("cat in db is: ", res);
+      return res[0].category;
+    } catch (error) {
+      return error;
+    }
+  };
+
   dbObj.questionByCategory = async (data = { category: "" }) => {
     await client.connect();
     try {
@@ -150,10 +163,10 @@ function dbConnector() {
         category: data.category,
         users: [data.email],
         code: data.code,
-        score1: 0,
-        score2: 0,
-        usr1Ans: null,
-        usr2Ans: null,
+        user1Score: 0,
+        user2Score: 0,
+        user1Ans: [],
+        user2Ans: [],
       });
 
       let obj = {
@@ -185,8 +198,6 @@ function dbConnector() {
         { returnDocument: "after" }
       );
 
-      console.log("the resp is: ", resp);
-
       return {
         code: resp.code,
         users: resp.users,
@@ -199,6 +210,34 @@ function dbConnector() {
         code: "",
         users: "",
         category: "",
+      };
+    }
+  };
+
+  dbObj.updateAnswer = async (
+    data = { code: "", user: "", answer: "", score: "", question: "" }
+  ) => {
+    await client.connect();
+    const { code, user, answer, score, question } = data;
+    try {
+      await gameRoom.findOneAndUpdate(
+        { code },
+        {
+          $set: {
+            [`${user}Ans`]: [{ question, answer }],
+            [`${user}Score`]: score,
+          },
+        }
+      );
+
+      return {
+        statusCode: 200,
+        message: "Success",
+      };
+    } catch (error) {
+      return {
+        statusCode: 400,
+        message: error.message,
       };
     }
   };
