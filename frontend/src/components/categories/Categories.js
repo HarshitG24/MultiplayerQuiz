@@ -1,6 +1,5 @@
-import { gql, useQuery, useSubscription } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./categories.css";
 import CategoryCard from "./CategoryCard";
 
@@ -22,10 +21,6 @@ export default function Categories() {
     <div className="categories-container">
       <h2>Categories</h2>
       <div className="all-categories">
-        {/* {data &&
-          data.questions.map(({ category }) => (
-            <CategoryCard category={category} />
-          ))} */}
         <CategoryCard data={data} />
       </div>
     </div>

@@ -1,0 +1,43 @@
+.quiz-container {
+  height: 100vh;
+  margin-top: 10%;
+}
+
+.quiz-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  margin: 2rem auto;
+  background: #5f4e33;
+  padding: 2rem;
+  flex-direction: column;
+  border-radius: 1rem;
+}
+
+.question {
+  font-size: 1.5rem;
+  color: #fbd392;
+  font-weight: 700;
+}
+
+.options {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.option {
+  padding: 1rem;
+  width: 100%;
+  margin: 1rem 0;
+  background: #de8f5f;
+  border: none;
+  outline: none;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+button > p {
+  font-size: 1.2rem;
+  color: black;
+  font-weight: bold;
+}
