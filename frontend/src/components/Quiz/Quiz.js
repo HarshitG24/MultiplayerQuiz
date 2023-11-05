@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./QuizCard.css";
 
 const FETCH_QUIZ_DATA = gql`
@@ -38,6 +38,9 @@ const ADD_ANSWER = gql`
 `;
 
 export default function Quiz() {
+  const dispatch = useDispatch();
+  const index = useSelector((state) => state.quiz.index);
+
   const [currentScore, setCurrentScore] = useState(0);
   const category = useSelector((state) => state.category.selectedCategory);
   const user = useSelector((state) => state.category.user);
@@ -52,7 +55,6 @@ export default function Quiz() {
   if (error) return "Error";
 
   const fetchedQuestions = data.fetchQuizData.questions;
-  console.log("fetched questions are: ", fetchedQuestions);
 
   function handleOptionClick(optionSelected, ans, index) {
     submitAnswer({
@@ -87,11 +89,22 @@ export default function Quiz() {
     );
   }
 
+  function myFunction() {
+    if (index >= 5) {
+      clearInterval();
+    }
+    console.log("the index is: ", index);
+    // dispatch(quizActions.setCurrentIndex(index + 1));
+  }
+
+  // Call myFunction every 30 seconds (30000 milliseconds)
+  const intervalId = setInterval(myFunction, 30000);
+
   return (
     <div className="quiz-container">
       {fetchedQuestions &&
         fetchedQuestions.length > 0 &&
-        quizCard(fetchedQuestions[0])}
+        quizCard(fetchedQuestions[index])}
     </div>
   );
 }
