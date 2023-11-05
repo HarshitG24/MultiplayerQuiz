@@ -17,14 +17,13 @@ const resolvers = {
 
       return questions;
     },
-    async fetchQuestions(_, { category }) {
-      const ans = await dbConnector.questionByCategory({ category });
-      return ans;
-    },
 
-    async fetchCategory(_, args) {
-      const category = await dbConnector.getCategory(args);
-      return category;
+    async fetchQuizData(_, args) {
+      const resp = await dbConnector.getQuizData(args);
+      return {
+        category: resp?.category || "",
+        questions: resp?.questions || [],
+      };
     },
   },
   Mutation: {
@@ -57,6 +56,11 @@ const resolvers = {
       const response = await dbConnector.updateAnswer(args);
       return response;
     },
+
+    // async addQuestions(_, args) {
+    //   const resp = await dbConnector.questionByCategory(args);
+    //   return resp;
+    // },
   },
 
   Subscription: {

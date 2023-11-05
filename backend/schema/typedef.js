@@ -31,11 +31,15 @@ const typeDefs = `
         answer: String!
     }
 
+    type QuizData {
+        category: String!
+        questions: [Question!]!
+    }
+
     type Query {
         users: [User!]
         questions: [Questions!]!
-        fetchQuestions(category: String!): [Question!]!
-        fetchCategory(code: Int!): String!
+        fetchQuizData(code: Int!): QuizData!
     }
 
     type Mutation {

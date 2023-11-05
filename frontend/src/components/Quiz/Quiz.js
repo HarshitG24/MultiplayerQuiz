@@ -1,22 +1,17 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { categoryActions } from "../../store/slices/category-slice";
 import "./QuizCard.css";
 
-const FETCH_CATEGORY = gql`
+const FETCH_QUIZ_DATA = gql`
   query ($code: Int!) {
-    fetchCategory(code: $code)
-  }
-`;
-
-const FETCH_QUESTIONS = gql`
-  query ($category: String!) {
-    fetchQuestions(category: $category) {
-      question
-      ans
-      options
+    fetchQuizData(code: $code) {
+      category
+      questions {
+        question
+        options
+        ans
+      }
     }
   }
 `;
@@ -47,10 +42,8 @@ export default function Quiz() {
   const category = useSelector((state) => state.category.selectedCategory);
   const user = useSelector((state) => state.category.user);
 
-  console.log("the redux data is: ", category, user);
-
-  const { data, loading, error } = useQuery(FETCH_QUESTIONS, {
-    variables: { category },
+  const { data, loading, error } = useQuery(FETCH_QUIZ_DATA, {
+    variables: { category, code: 5678 },
   });
 
   const [submitAnswer] = useMutation(ADD_ANSWER);
@@ -58,7 +51,7 @@ export default function Quiz() {
   if (loading) return "Loading..";
   if (error) return "Error";
 
-  const fetchedQuestions = data.fetchQuestions;
+  const fetchedQuestions = data.fetchQuizData.questions;
   console.log("fetched questions are: ", fetchedQuestions);
 
   function handleOptionClick(optionSelected, ans, index) {

@@ -120,25 +120,67 @@ function dbConnector() {
     }
   };
 
-  dbObj.getCategory = async ({ code }) => {
+  dbObj.getQuizData = async ({ code }) => {
     await client.connect();
 
     try {
       const res = await gameRoom.find({ code }).toArray();
 
-      console.log("cat in db is: ", res);
-      return res[0].category;
+      if (res !== undefined && res.length > 0) {
+        const { category, questions } = res[0];
+
+        return {
+          category,
+          questions,
+          message: "Success",
+          statusCode: 200,
+        };
+      }
     } catch (error) {
-      return error;
+      return { category: "", questions: [], message: error, statusCode: 400 };
     }
   };
 
-  dbObj.questionByCategory = async (data = { category: "" }) => {
+  // dbObj.questionByCategory = async (data = { category: "", code: "" }) => {
+  //   await client.connect();
+  //   const { category, code } = data;
+  //   try {
+  //     const questions = await categories
+  //       .aggregate([
+  //         { $match: { category } },
+  //         { $unwind: { path: "$questions" } },
+  //         { $sample: { size: 5 } },
+  //         {
+  //           $replaceRoot: {
+  //             newRoot: "$questions",
+  //           },
+  //         },
+  //       ])
+  //       .toArray();
+
+  //     await gameRoom.findOneAndUpdate({ code }, { $set: { questions } });
+
+  //     return {
+  //       statusCode: 200,
+  //       message: "Success",
+  //     };
+  //   } catch (error) {
+  //     console.log(error);
+
+  //     return {
+  //       statusCode: 400,
+  //       message: error,
+  //     };
+  //   }
+  // };
+
+  dbObj.startGame = async (data = { email: "", category: "", code: "" }) => {
     await client.connect();
+    const { email, category, code } = data;
     try {
       const questions = await categories
         .aggregate([
-          { $match: { category: data.category } },
+          { $match: { category } },
           { $unwind: { path: "$questions" } },
           { $sample: { size: 5 } },
           {
@@ -149,30 +191,21 @@ function dbConnector() {
         ])
         .toArray();
 
-      return questions;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  dbObj.startGame = async (data = { email: "", category: "", code: "" }) => {
-    await client.connect();
-
-    try {
       await gameRoom.insertOne({
-        category: data.category,
-        users: [data.email],
-        code: data.code,
+        category: category,
+        users: [email],
+        code: code,
         user1Score: 0,
         user2Score: 0,
         user1Ans: [],
         user2Ans: [],
+        questions,
       });
 
       let obj = {
-        category: data.category,
-        users: [data.email],
-        code: data.code,
+        category: category,
+        users: [email],
+        code: code,
         status: 200,
       };
 
