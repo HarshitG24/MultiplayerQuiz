@@ -26,9 +26,16 @@ const typeDefs = `
         questions: [Question!]!
     }
 
-    type Answer {
-        question: Int!
+    type QnA {
+        question: String!
         answer: String!
+    }
+
+    type Answer {
+        user1Score: Int!
+        user2Score: Int!
+        user1Ans: [QnA!]
+        user2Ans: [QnA!]
     }
 
     type QuizData {
@@ -47,11 +54,12 @@ const typeDefs = `
         login(email: String!, password: String!): ApiResponse!
         startGame(email: String!, category: String!, code: Int!): Game!
         joinGame(code: Int!, email: String!): Game!
-        addAnswer(code: Int!, user: String!, answer: String!, score: Int!, question: Int!): ApiResponse!
+        addAnswer(code: Int!, user: String!, answer: String!, score: Int!, question: Int!): Answer!
     }
 
     type Subscription {
         gameOn(code: Int!): Game!
+        optionSelected(code: Int!): Answer!
     }
 `;
 

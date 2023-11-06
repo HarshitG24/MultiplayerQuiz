@@ -53,7 +53,18 @@ const resolvers = {
     },
 
     async addAnswer(_, args) {
+      const { code, user } = args;
+
       const response = await dbConnector.updateAnswer(args);
+      const { user1Score, user2Score, user1Ans, user2Ans } = response;
+      answerSubScription({
+        user1Score,
+        user2Score,
+        user1Ans,
+        user2Ans,
+        code,
+        user,
+      });
       return response;
     },
 
@@ -67,12 +78,27 @@ const resolvers = {
     gameOn: {
       subscribe: (_, { code }) => pubSub.asyncIterator(code.toString()),
     },
+    optionSelected: {
+      subscribe: (_, { code, user }) => pubSub.asyncIterator(`${code}`),
+    },
   },
 };
 
 const startGameSubScription = ({ users, code, category }) => {
   pubSub.publish(code.toString(), {
     gameOn: { users, code, category },
+  });
+};
+const answerSubScription = ({
+  user1Score,
+  user2Score,
+  user1Ans,
+  user2Ans,
+  code,
+  user,
+}) => {
+  pubSub.publish(`${code}`, {
+    optionSelected: { user1Score, user2Score, user1Ans, user2Ans },
   });
 };
 

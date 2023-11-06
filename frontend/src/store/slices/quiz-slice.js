@@ -5,8 +5,11 @@ const quizSlice = createSlice({
   initialState: {
     questions: [],
     currentQuestion: "",
+    correctAns: "",
     currentAnswer: "",
     opponentAnswer: "",
+    currentScore: 0,
+    opponentScore: 0,
     index: 0,
   },
   reducers: {
@@ -24,6 +27,15 @@ const quizSlice = createSlice({
     },
     setCurrentIndex(state, action) {
       state.index = action.payload;
+    },
+    setCurrentScore(state, action) {
+      state.currentScore = action.payload;
+    },
+    setOpponentScore(state, action) {
+      state.opponentScore = action.payload;
+    },
+    setCorrectAns(state, action) {
+      state.correctAns = action.payload;
     },
   },
 });

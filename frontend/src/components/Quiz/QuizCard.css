@@ -41,3 +41,23 @@ button > p {
   color: black;
   font-weight: bold;
 }
+
+.my-answer {
+  background-color: orange;
+}
+
+.opponent-answer {
+  background-color: yellow;
+}
+
+.correct-answer {
+  background-color: green;
+}
+
+.button-selected {
+  opacity: 0.5;
+}
+
+.button-opacity {
+  opacity: 1;
+}

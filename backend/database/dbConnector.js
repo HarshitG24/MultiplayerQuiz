@@ -253,24 +253,35 @@ function dbConnector() {
     await client.connect();
     const { code, user, answer, score, question } = data;
     try {
-      await gameRoom.findOneAndUpdate(
+      const resp = await gameRoom.findOneAndUpdate(
         { code },
         {
+          $push: {
+            [`${user}Ans`]: { question, answer },
+          },
           $set: {
-            [`${user}Ans`]: [{ question, answer }],
             [`${user}Score`]: score,
           },
-        }
+        },
+        { returnDocument: "after" }
       );
-
+      const { user1Score, user2Score, user1Ans, user2Ans } = resp;
       return {
-        statusCode: 200,
-        message: "Success",
+        // statusCode: 200,
+        // message: "Success",
+        user1Score,
+        user2Score,
+        user1Ans,
+        user2Ans,
       };
     } catch (error) {
       return {
-        statusCode: 400,
-        message: error.message,
+        // statusCode: 400,
+        // message: error.message,
+        user1Score: "",
+        user2Score: "",
+        user1Ans: "",
+        user2Ans: "",
       };
     }
   };

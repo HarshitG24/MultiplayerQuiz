@@ -19,6 +19,7 @@ import Categories from "./components/categories/Categories";
 import Quiz from "./components/Quiz/Quiz";
 import { Provider } from "react-redux";
 import store from "./store";
+import Result from "./components/Quiz/Result";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: "/quiz",
     element: <Quiz />,
+  },
+  {
+    path: "/result",
+    element: <Result />,
   },
 ]);
 
