@@ -1,102 +1,50 @@
-import { gql, useMutation, useSubscription } from "@apollo/client";
-import React, { useState } from "react";
+import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/dream-gown.jpg";
 import { categoryActions } from "../../store/slices/category-slice";
+import { gameActions } from "../../store/slices/game-slice";
 import "./CategoryCard.css";
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { useEffect } from "react";
 
-const START_GAME = gql`
-  mutation ($email: String!, $category: String!, $code: Int!) {
-    startGame(email: $email, category: $category, code: $code) {
-      users
-      code
-      category
-    }
-  }
-`;
-
-const JOIN_GAME = gql`
-  mutation ($code: Int!, $email: String!) {
-    joinGame(code: $code, email: $email) {
-      code
-      category
-      users
-    }
-  }
-`;
-
-const GAME_SUBSCRIPTION = gql`
-  subscription ($code: Int!) {
-    gameOn(code: $code) {
-      code
-      category
-      users
-    }
-  }
-`;
-
-export default function CategoryCard({ data }) {
+export default function CategoryCard({ categoryData }) {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const email = useSelector((state) => state.auth.email);
+  const code = useSelector((state) => state.game.code);
 
-  const [joinResp] = useMutation(JOIN_GAME);
-  const [startResp] = useMutation(START_GAME);
-  const subData = useSubscription(GAME_SUBSCRIPTION, {
-    variables: { code: 5678 },
-  });
+  // const [startResp] = useMutation(START_GAME);
 
-  const [style, setStyle] = useState({ display: "none" });
+  // function handleStartGame(category) {
+  //   const code = generateGameCode();
+  //   dispatch(gameActions.setGameCode(code));
+  //   dispatch(gameActions.toggleModal());
+  //   dispatch(gameActions.setModalType("start"));
 
-  // function handleMouseEnter() {
-  //   setStyle((style) => ({ ...style, display: "yes" }));
+  //   startResp({
+  //     variables: {
+  //       code,
+  //       email: "wsx@wsx.com",
+  //       category,
+  //     },
+  //   }).then(() => {
+  //     dispatch(categoryActions.addCategory(category));
+  //     dispatch(categoryActions.setUser("user1"));
+  //   });
   // }
-  // function handleMouseExit() {
-  //   setStyle((style) => ({ ...style, display: "none" }));
-  // }
 
-  function handleJoinGame(event, category) {
-    event.preventDefault();
-
-    joinResp({
-      variables: {
-        code: 5678,
-        email: "qaz@wsx.com",
-      },
-    })
-      .then(() => {
-        dispatch(categoryActions.addCategory(category));
-        dispatch(categoryActions.setUser("user2"));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  function handleStartGame(event, category) {
-    event.preventDefault();
-
-    startResp({
-      variables: {
-        code: 5678,
-        email: "wsx@wsx.com",
-        category,
-      },
-    }).then(() => {
-      dispatch(categoryActions.addCategory(category));
-      dispatch(categoryActions.setUser("user1"));
-    });
-  }
-
-  if (subData !== undefined && subData?.data?.gameOn?.users?.length === 2) {
-    nav("/quiz");
+  function handleStartGame(category) {
+    dispatch(gameActions.setModalType("start"));
+    dispatch(gameActions.toggleModal());
+    dispatch(categoryActions.addCategory(category));
   }
 
   return (
     <>
-      {data &&
-        data.questions.map(({ category }) => (
+      {categoryData &&
+        categoryData.questions.map(({ category }) => (
           <div className="product">
             {" "}
             <img src={logo} alt="This is the topic illustration" />
@@ -109,16 +57,8 @@ export default function CategoryCard({ data }) {
                 perspiciatis ex praesentium, qui nobis corrupti?
               </p>
             </div>
-            <div
-              className="game-options"
-              // ${
-              //   style.display === "none"
-              //     ? "game-option-no-display"
-              //     : "game-option-display"
-              // }`}
-            >
-              <button onClick={(e) => handleJoinGame(e, category)}>Join</button>
-              <button onClick={(e) => handleStartGame(e, category)}>
+            <div className="start-game">
+              <button onClick={handleStartGame.bind(this, category)}>
                 Start
               </button>
             </div>

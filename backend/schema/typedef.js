@@ -47,6 +47,7 @@ const typeDefs = `
         users: [User!]
         questions: [Questions!]!
         fetchQuizData(code: Int!): QuizData!
+        getUsers(code: Int!): [String!]!
     }
 
     type Mutation {
