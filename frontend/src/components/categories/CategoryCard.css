@@ -28,6 +28,7 @@
 
 .game-options {
   /* display: none; */
+  display: flex;
   position: absolute;
   top: 0;
   justify-content: center;
@@ -37,7 +38,13 @@
   flex-direction: column;
 }
 
-.game-options > button {
+.start-game {
+  display: flex;
+  justify-content: flex-end;
+  /* padding: 2rem; */
+}
+
+.start-game > button {
   z-index: 100;
   background: #f4b115;
   border: none;
@@ -48,5 +55,5 @@
   margin: 2rem;
   padding: 1rem;
   border-radius: 2rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }

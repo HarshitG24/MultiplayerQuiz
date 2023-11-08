@@ -2,7 +2,6 @@ import dbConnector from "../database/dbConnector.js";
 import { PubSub } from "graphql-subscriptions";
 
 const pubSub = new PubSub();
-const CODE = "5678";
 
 const resolvers = {
   Query: {
@@ -24,6 +23,12 @@ const resolvers = {
         category: resp?.category || "",
         questions: resp?.questions || [],
       };
+    },
+
+    async getUsers(_, { code }) {
+      const resp = await dbConnector.getUsers(code);
+      console.log("resp is: ", resp);
+      return resp.users;
     },
   },
   Mutation: {

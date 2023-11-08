@@ -1,0 +1,14 @@
+.header-container {
+  background: black;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  color: #f3e7d4;
+}
+
+.quiz-title {
+  font-size: 2rem;
+  font-weight: 800;
+}

@@ -286,6 +286,20 @@ function dbConnector() {
     }
   };
 
+  dbObj.getUsers = async (code = "") => {
+    await client.connect();
+    try {
+      const res = await gameRoom.find({ code }).toArray();
+      return {
+        users: res.length > 0 ? res[0].users : [],
+      };
+    } catch (error) {
+      return {
+        users: [],
+      };
+    }
+  };
+
   return dbObj;
 }
 
