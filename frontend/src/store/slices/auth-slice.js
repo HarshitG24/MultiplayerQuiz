@@ -4,7 +4,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState: { email: "" },
   reducers: {
-    setEmail(state, action) {},
+    setEmail(state, action) {
+      state.email = action.payload;
+    },
   },
 });
 

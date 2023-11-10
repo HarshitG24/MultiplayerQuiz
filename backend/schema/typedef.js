@@ -43,6 +43,12 @@ const typeDefs = `
         questions: [Question!]!
     }
 
+    type AuthResponse {
+        accessToken:String!
+        refreshToken: String!
+        email: String!
+    }
+
     type Query {
         users: [User!]
         questions: [Questions!]!
@@ -56,6 +62,7 @@ const typeDefs = `
         startGame(email: String!, category: String!, code: Int!): Game!
         joinGame(code: Int!, email: String!): Game!
         addAnswer(code: Int!, user: String!, answer: String!, score: Int!, question: Int!): Answer!
+        signUpGoogle(accessToken: String!): AuthResponse
     }
 
     type Subscription {

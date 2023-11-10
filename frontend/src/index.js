@@ -43,11 +43,19 @@ const splitLink = split(
   httpLink
 );
 
+// const client = new ApolloClient({
+//   cache: new InMemoryCache(),
+//   link: splitLink,
+//   dataIdFromObject: (o) => o.id, // see each record, and identify that record using the id field of that record,
+//   // so now we need to query id for every query we make
+//   credentials: "include",
+// });
+
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: splitLink,
-  dataIdFromObject: (o) => o.id, // see each record, and identify that record using the id field of that record,
-  // so now we need to query id for every query we make
+  dataIdFromObject: (o) => o.id,
+  credentials: "include", // Make sure to include credentials
 });
 
 const router = createBrowserRouter([
