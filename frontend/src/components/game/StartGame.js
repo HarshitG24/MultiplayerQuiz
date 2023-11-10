@@ -48,6 +48,7 @@ export default function StartGame() {
   const navigate = useNavigate();
   const [gameCode, setGameCode] = useState("");
   const [joinResp] = useMutation(JOIN_GAME);
+  const email = useSelector((state) => state.auth.email);
   const code = useSelector((state) => state.game.code);
   const type = useSelector((state) => state.game.modalType);
   const open = useSelector((state) => state.game.open);
@@ -103,7 +104,7 @@ export default function StartGame() {
     startResp({
       variables: {
         code,
-        email: "wsx@wsx.com",
+        email,
         category,
       },
     }).then(() => {
@@ -122,7 +123,7 @@ export default function StartGame() {
     joinResp({
       variables: {
         code: +gameCode,
-        email: "qaz@wsx.com",
+        email,
       },
     })
       .then(() => {
