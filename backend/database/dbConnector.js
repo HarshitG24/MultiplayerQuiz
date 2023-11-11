@@ -74,16 +74,21 @@ function dbConnector() {
         const result = await comparePassword(password, user.password);
         if (result) {
           return { statusCode: 200, message: "success" };
+        } else {
+          return {
+            statusCode: 401,
+            message: "Invalid credentials",
+          };
         }
+      } else {
+        return {
+          statusCode: 401,
+          message: "No user found for the given email.",
+        };
       }
-
-      return {
-        statusCode: 400,
-        message: "something went wrong",
-      };
     } catch (error) {
       return {
-        statusCode: 400,
+        statusCode: 500,
         message: error,
       };
     }

@@ -45,7 +45,7 @@ export default function CategoryCard({ categoryData }) {
     <>
       {categoryData &&
         categoryData.questions.map(({ category }) => (
-          <div className="product">
+          <div className="product" key={category}>
             {" "}
             <img src={logo} alt="This is the topic illustration" />
             <div className="category-details">

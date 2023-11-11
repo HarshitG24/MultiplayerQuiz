@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./LoginCard.css";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/slices/auth-slice";
@@ -29,57 +29,25 @@ function LoginCard() {
   const dispatch = useDispatch();
   const [accessToken, setAccessToken] = useState(null);
 
-  const [user, setUser] = useState({ email: "", password: "" });
+  // const [user, setUser] = useState({ email: "", password: "" });
   const [addUser] = useMutation(LOGIN);
   const navigate = useNavigate();
-  const [signUpGoogle, { data, loading, error }] = useMutation(SIGN_UP_GOOGLE);
+  const [signUpGoogle] = useMutation(SIGN_UP_GOOGLE);
+  const [validationErrors, setValidationErrors] = useState("");
+
+  const [isEmailInvalid, setIsEmailInvalid] = useState(false);
 
   useEffect(() => {
     if (accessToken) {
       signUpGoogle({ variables: { accessToken } }).then((res) => {
-        console.log("resp on FE is: ", res);
         const { data } = res;
         if (data.signUpGoogle.email !== "") {
           dispatch(authActions.setEmail(data.signUpGoogle.email));
           navigate("/categories");
         }
       });
-      // if (data && !error) {
-      //   //navigate user to profile
-      //   console.log("is this success", data);
-      //   // if (data.signUpGoogle.email !== "") {
-      //   //   dispatch(authActions.setEmail(data.signUpGoogle.email));
-      //   //   navigate("/categories");
-      //   // }
-      // }
     }
-  }, [accessToken]);
-
-  function handleInputChange(event, key) {
-    setUser((user) => {
-      return {
-        ...user,
-        [key]: event?.target?.value || "",
-      };
-    });
-  }
-
-  function onSubmitHandler(event) {
-    event.preventDefault();
-
-    const { email, password } = user;
-
-    addUser({
-      variables: { email, password },
-    })
-      .then(() => {
-        dispatch(authActions.setEmail(email));
-        navigate("/categories");
-      })
-      .catch((err) => {
-        throw err;
-      });
-  }
+  }, [accessToken, dispatch, navigate, signUpGoogle]);
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (response) => {
@@ -90,8 +58,45 @@ function LoginCard() {
     },
   });
 
+  function onFieldChange(event) {
+    const enteredEmail = event.target.value;
+
+    const emailInvalid = enteredEmail !== "" && !enteredEmail.includes("@");
+    setIsEmailInvalid(emailInvalid);
+  }
+
+  function onChangeHandler() {
+    setIsEmailInvalid(false);
+    setValidationErrors("");
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    const { email, password } = data;
+
+    addUser({
+      variables: { email, password },
+    })
+      .then((res) => {
+        console.log("api ans is: ", res);
+
+        if (res?.data?.login?.statusCode !== 200) {
+          setValidationErrors(res.data.login.message);
+        } else {
+          dispatch(authActions.setEmail(email));
+          navigate("/categories");
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
   return (
-    <div className="card-container">
+    <form className="card-container" onSubmit={handleSubmit}>
       <div className="login-image">
         <div>
           <img
@@ -103,30 +108,40 @@ function LoginCard() {
       </div>
       <div className="login-form">
         <p className="title">QuizScript</p>
-        <form>
-          <input
-            type="email"
-            className="login-input"
-            placeholder="Username"
-            value={user.email}
-            onChange={(event) => handleInputChange(event, "email")}
-          />
+        {validationErrors !== "" && (
+          <p style={{ fontSize: "1rem" }}>{validationErrors}</p>
+        )}
+        <div>
+          <div>
+            <input
+              type="email"
+              className="login-input"
+              name="email"
+              placeholder="Username"
+              onBlur={onFieldChange}
+              onChange={onChangeHandler}
+              // required
+            />
+            {isEmailInvalid && (
+              <p style={{ fontSize: "1rem" }}>Please enter valid email</p>
+            )}
+          </div>
           <input
             type="password"
             className="login-input"
             placeholder="Password"
-            value={user.password}
-            onChange={(event) => handleInputChange(event, "password")}
+            name="password"
+            onChange={onChangeHandler}
+            // required
+            // minLength={6}
           />
           <div className="login-btn">
-            <button type="submit" onClick={onSubmitHandler}>
-              Login
-            </button>
+            <button>Login</button>
           </div>
-        </form>
+        </div>
         <button onClick={handleGoogleLogin}>Sign In with Google</button>
       </div>
-    </div>
+    </form>
   );
 }
 
