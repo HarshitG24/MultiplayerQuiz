@@ -57,7 +57,7 @@ const typeDefs = `
     }
 
     type Mutation {
-        signup(email: String!, password: String!): User!
+        signup(email: String!, password: String!, confirmPassword: String!): ApiResponse!
         login(email: String!, password: String!): ApiResponse!
         startGame(email: String!, category: String!, code: Int!): Game!
         joinGame(code: Int!, email: String!): Game!

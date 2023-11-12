@@ -9,3 +9,7 @@ export function isNotEmpty(value) {
 export function hasMinLength(value, minLength) {
   return value.length >= minLength;
 }
+
+export function passwordEqual(password, confirm_password) {
+  return password === confirm_password;
+}

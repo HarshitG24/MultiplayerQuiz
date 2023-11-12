@@ -2,7 +2,7 @@ import dbConnector from "../database/dbConnector.js";
 import { PubSub } from "graphql-subscriptions";
 import { authenticateGoogle } from "../auth/auth.js";
 import "../auth/auth.js";
-import { hasMinLength, isEmail } from "../util/validation.js";
+import { hasMinLength, isEmail, passwordEqual } from "../util/validation.js";
 
 const pubSub = new PubSub();
 
@@ -36,9 +36,18 @@ const resolvers = {
   },
   Mutation: {
     async signup(_, args) {
-      const data = await dbConnector.signUp(args);
-      const newUser = { email: data.email, password: "" };
-      return newUser;
+      const { email, password, confirmPassword } = args;
+      if (
+        !isEmail(email) ||
+        !hasMinLength(password, 6) ||
+        !passwordEqual(password, confirmPassword)
+      ) {
+        return {
+          statusCode: 400,
+          message: "Authentication Failed",
+        };
+      }
+      return await dbConnector.signUp(args);
     },
     async login(_, args) {
       const { email, password } = args;

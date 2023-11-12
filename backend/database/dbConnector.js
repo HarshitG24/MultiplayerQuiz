@@ -27,15 +27,26 @@ function dbConnector() {
   dbObj.signUp = async ({ email, password }) => {
     await client.connect();
 
+    const user = await users.find({ email }).toArray();
+    if (user.length > 0) {
+      return {
+        statusCode: 401,
+        message: "User already exists with the given email",
+      };
+    }
+
     try {
       const hashedPassword = await hashPassword(password);
       await users.insertOne({ email, password: hashedPassword });
-      return { email, status: 200 };
+      return {
+        statusCode: 200,
+        message: "Success",
+      };
     } catch (error) {
-      console.error("error: " + error);
-      return 400;
-    } finally {
-      //   client.close();
+      return {
+        statusCode: 500,
+        message: "Something went wrong!",
+      };
     }
   };
 
