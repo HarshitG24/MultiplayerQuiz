@@ -120,7 +120,7 @@ function LoginCard() {
               placeholder="Username"
               onBlur={onFieldChange}
               onChange={onChangeHandler}
-              // required
+              required
             />
             {isEmailInvalid && (
               <p style={{ fontSize: "1rem" }}>Please enter valid email</p>
@@ -132,8 +132,8 @@ function LoginCard() {
             placeholder="Password"
             name="password"
             onChange={onChangeHandler}
-            // required
-            // minLength={6}
+            required
+            minLength={6}
           />
           <div className="login-btn">
             <button>Login</button>
