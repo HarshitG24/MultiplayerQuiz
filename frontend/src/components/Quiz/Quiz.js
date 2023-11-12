@@ -152,15 +152,21 @@ export default function Quiz() {
           {options.map((option, index) => {
             return (
               <button
-                // disabled={currentAnswer !== ""}
+                disabled={currentAnswer !== ""}
                 className={[
-                  `option ${option === currentAnswer ? "my-answer" : null} ${
-                    option === opponentAnswer ? "opponent-answer" : null
-                  } ${
+                  `option ${
+                    option === currentAnswer ? "option-cursor my-answer" : null
+                  } ${option === opponentAnswer ? "opponent-answer" : null} ${
                     currentAnswer && opponentAnswer && option === ans
                       ? "correct-answer"
                       : null
-                  } `,
+                  } ${
+                    currentAnswer !== "" && opponentAnswer === ""
+                      ? option !== currentAnswer
+                        ? "option-cursor waiting"
+                        : null
+                      : null
+                  }`,
                 ]}
                 key={index}
                 onClick={handleOptionClick.bind(this, option, ans, index)}>

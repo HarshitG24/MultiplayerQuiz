@@ -61,3 +61,11 @@ button > p {
 .button-opacity {
   opacity: 1;
 }
+
+.option-cursor {
+  cursor: default;
+}
+
+.waiting {
+  opacity: 0.5;
+}
