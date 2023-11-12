@@ -1,11 +1,11 @@
-import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import { gql, useQuery } from "@apollo/client";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { gameActions } from "../../store/slices/game-slice";
 import { quizActions } from "../../store/slices/quiz-slice";
 import "./QuizCard.css";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import QuizCard from "./QuizCard";
 
 const FETCH_QUIZ_DATA = gql`
   query ($code: Int!) {
@@ -16,27 +16,6 @@ const FETCH_QUIZ_DATA = gql`
         options
         ans
       }
-    }
-  }
-`;
-
-const ADD_ANSWER = gql`
-  mutation (
-    $code: Int!
-    $user: String!
-    $answer: String!
-    $score: Int!
-    $question: Int!
-  ) {
-    addAnswer(
-      code: $code
-      user: $user
-      answer: $answer
-      score: $score
-      question: $question
-    ) {
-      user1Score
-      user2Score
     }
   }
 `;
@@ -56,18 +35,12 @@ const ANS_SUB = gql`
   }
 `;
 
-// let index = 0;
 export default function Quiz() {
-  // const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const index = useSelector((state) => state.quiz.index);
   const currentScore = useSelector((state) => state.quiz.currentScore);
   const opponentScore = useSelector((state) => state.quiz.opponentScore);
-  const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
-  const opponentAnswer = useSelector((state) => state.quiz.opponentAnswer);
-
-  // const [currentScore, setCurrentScore] = useState(0);
   const category = useSelector((state) => state.category.selectedCategory);
   const user = useSelector((state) => state.category.user);
   const code = useSelector((state) => state.game.code);
@@ -75,8 +48,6 @@ export default function Quiz() {
   const { data, loading, error, subscribeToMore } = useQuery(FETCH_QUIZ_DATA, {
     variables: { category, code },
   });
-
-  const [submitAnswer] = useMutation(ADD_ANSWER);
 
   const startSubscription = () => {
     subscribeToMore({
@@ -105,7 +76,6 @@ export default function Quiz() {
               setTimeout(() => {
                 dispatch(quizActions.setAnswer(""));
                 dispatch(quizActions.setOpponentAnswer(""));
-                // index++;
                 dispatch(quizActions.setCurrentIndex(index + 1));
                 if (index > 3) navigate("/result");
               }, 3000);
@@ -128,64 +98,13 @@ export default function Quiz() {
 
   const fetchedQuestions = data.fetchQuizData.questions;
 
-  function handleOptionClick(optionSelected, ans, index) {
-    dispatch(quizActions.setAnswer(optionSelected));
-    submitAnswer({
-      variables: {
-        code,
-        user,
-        answer: optionSelected,
-        score: ans === optionSelected ? currentScore + 1 : currentScore,
-        question: index,
-      },
-    });
-  }
-
-  function quizCard({ question, options, ans }) {
-    return (
-      <div className="quiz-card-container">
-        <div>TIMER SLIDER</div>
-        <hr />
-        <p className="question">{question}</p>
-
-        <div className="options">
-          {options.map((option, index) => {
-            return (
-              <button
-                disabled={currentAnswer !== ""}
-                className={[
-                  `option ${
-                    option === currentAnswer ? "option-cursor my-answer" : null
-                  } ${option === opponentAnswer ? "opponent-answer" : null} ${
-                    currentAnswer && opponentAnswer && option === ans
-                      ? "correct-answer"
-                      : null
-                  } ${
-                    currentAnswer !== "" && opponentAnswer === ""
-                      ? option !== currentAnswer
-                        ? "option-cursor waiting"
-                        : null
-                      : null
-                  }`,
-                ]}
-                key={index}
-                onClick={handleOptionClick.bind(this, option, ans, index)}>
-                <p>{option}</p>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    );
-  }
-
   if (index > 4) return;
 
   return (
     <div className="quiz-container">
-      {fetchedQuestions &&
-        fetchedQuestions.length > 0 &&
-        quizCard(fetchedQuestions[index])}
+      {fetchedQuestions && fetchedQuestions.length > 0 && (
+        <QuizCard data={fetchedQuestions[index]} />
+      )}
       <div>
         <div>
           <p>Your Score</p>
