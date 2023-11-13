@@ -96,6 +96,11 @@ function LoginCard() {
       });
   }
 
+  function onSignUpHandler(e) {
+    e.preventDefault();
+    navigate("/signup");
+  }
+
   return (
     <form className="card-container" onSubmit={handleSubmit}>
       <div className="login-image">
@@ -145,7 +150,7 @@ function LoginCard() {
           </div>
         </div>
 
-        <div id="signup">
+        <div id="signup" onClick={onSignUpHandler}>
           <span>Don't have an account?</span>
           <button>Sign Up</button>
         </div>
