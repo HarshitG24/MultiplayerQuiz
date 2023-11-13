@@ -1,9 +1,12 @@
 .card-container {
   display: flex;
   width: 60%;
-  background-color: rgb(34, 46, 75);
+  background-color: #3a4d39;
   color: white;
   flex-wrap: wrap;
+  border-radius: 1rem;
+  box-shadow: 1px 1px 4px 2px rgba(12, 5, 32, 0.6);
+  overflow: hidden;
 }
 
 .login-image {
@@ -14,20 +17,27 @@
 
 .login-illustration {
   width: 100%;
+  height: 100%;
+  object-fit: fill;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
+  margin: 1rem 2.5rem;
   flex: 0.5;
+}
+
+.login-form > div {
+  padding: 0 1rem;
 }
 
 .title {
   text-align: center;
   font-size: 2rem;
   font-weight: 800;
-  margin: 2rem 0;
+  margin: 1rem 0;
 }
 
 form {
@@ -43,16 +53,76 @@ form {
   color: white;
   width: 100%;
   font-size: 1.5rem;
-  margin: 2rem 0;
+  margin: 1.5rem 0;
 }
 
 .login-btn {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.login-btn {
+  background: #f4b115;
+  border: none;
+  outline: none;
+  color: #201e1a;
+  cursor: pointer;
+  width: 40%;
+  margin: 1rem;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+}
+
 .login-btn > button {
   cursor: pointer;
+}
+
+.google-sign-in {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#google-login {
+  background-color: rgb(245, 245, 245);
+  padding: 0.5rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #201e1a;
+  cursor: pointer;
+}
+
+#google-login span {
+  font-size: 1rem;
+}
+
+#signup {
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+#signup > button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: none;
+  font-size: 1.4rem;
+  color: #f4b115;
+  padding-left: 0.2rem;
 }

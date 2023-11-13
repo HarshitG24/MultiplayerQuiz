@@ -5,6 +5,7 @@ import "./LoginCard.css";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/slices/auth-slice";
 import { useGoogleLogin } from "@react-oauth/google";
+import { FcGoogle } from "react-icons/fc";
 
 const LOGIN = gql`
   mutation Login($email: String!, $password: String!) {
@@ -98,13 +99,11 @@ function LoginCard() {
   return (
     <form className="card-container" onSubmit={handleSubmit}>
       <div className="login-image">
-        <div>
-          <img
-            src="https://img.freepik.com/premium-vector/register-access-login-password-internet-online-website-concept-flat-illustration_385073-108.jpg"
-            alt="This is an illustration for login"
-            className="login-illustration"
-          />
-        </div>
+        <img
+          src="https://img.freepik.com/premium-vector/register-access-login-password-internet-online-website-concept-flat-illustration_385073-108.jpg"
+          alt="This is an illustration for login"
+          className="login-illustration"
+        />
       </div>
       <div className="login-form">
         <p className="title">QuizScript</p>
@@ -135,11 +134,21 @@ function LoginCard() {
             required
             minLength={6}
           />
-          <div className="login-btn">
-            <button>Login</button>
+          <div id="login">
+            <button className="login-btn">Login</button>
           </div>
         </div>
-        <button onClick={handleGoogleLogin}>Sign In with Google</button>
+        <div className="google-sign-in" onClick={handleGoogleLogin}>
+          <div id="google-login">
+            <FcGoogle />
+            <span>Login</span>
+          </div>
+        </div>
+
+        <div id="signup">
+          <span>Don't have an account?</span>
+          <button>Sign Up</button>
+        </div>
       </div>
     </form>
   );
