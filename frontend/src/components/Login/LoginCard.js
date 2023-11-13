@@ -82,8 +82,6 @@ function LoginCard() {
       variables: { email, password },
     })
       .then((res) => {
-        console.log("api ans is: ", res);
-
         if (res?.data?.login?.statusCode !== 200) {
           setValidationErrors(res.data.login.message);
         } else {
