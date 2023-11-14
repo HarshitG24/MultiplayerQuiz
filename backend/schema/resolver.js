@@ -103,14 +103,9 @@ const resolvers = {
         access_token: accessToken,
       };
 
-      console.log("am i here 1");
-
       try {
         // data contains the accessToken, refreshToken and profile from passport
         const { data, info } = await authenticateGoogle(req, res);
-
-        console.log("am i here 2", data);
-
         // Optional we can also use getGoogleProfile to reterieve user informations
         // const data = await getGoogleProfile(accessToken);
 
@@ -124,15 +119,10 @@ const resolvers = {
         }
         // If not Error take user information
         const { _json } = data;
-
-        console.log("am i here 3", _json);
-
         // Deconstruct user information from _json data
         const { email } = _json;
         const firstName = _json.given_name;
         const lastName = _json.family_name;
-
-        console.log("my details are: ", email, firstName, lastName);
 
         let accessToken = "";
         let refreshToken = "";

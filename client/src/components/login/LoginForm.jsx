@@ -9,6 +9,7 @@ import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { LOGIN } from "./mutation.js";
 import Error from "../error/Error";
+import PageHeader from "../../ui/PageHeader/PageHeader";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ export default function LoginForm() {
           </div>
           <div className="form-control">
             <div className="title">
-              <h1>QuizScript</h1>
+              <PageHeader>QuizScript</PageHeader>
             </div>
             {validationErrors !== "" && <Error>{validationErrors}</Error>}
             <div>
