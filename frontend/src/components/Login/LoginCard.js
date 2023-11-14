@@ -143,8 +143,10 @@ function LoginCard() {
         </div>
         <div className="google-sign-in" onClick={handleGoogleLogin}>
           <div id="google-login">
-            <FcGoogle />
-            <span>Login</span>
+            <div id="google-login">
+              <FcGoogle />
+              <span>Login</span>
+            </div>
           </div>
         </div>
 

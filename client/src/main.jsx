@@ -15,6 +15,10 @@ import { createClient } from "graphql-ws";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import Root from "./pages/Root";
+import { Provider } from "react-redux";
+import store from "./store/index.js";
+import CategoriesPage from "./pages/CategoriesPage";
+import SignUpPage from "./pages/SignUpPage";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -54,6 +58,14 @@ const router = createBrowserRouter([
         index: true,
         element: <LoginPage />,
       },
+      {
+        path: "categories",
+        element: <CategoriesPage />,
+      },
+      {
+        path: "signup",
+        element: <SignUpPage />,
+      },
     ],
   },
 ]);
@@ -61,9 +73,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      {/* <Provider> */}
-      <RouterProvider router={router} />
-      {/* </Provider> */}
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </ApolloProvider>
   </React.StrictMode>
 );

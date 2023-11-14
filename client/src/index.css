@@ -15,13 +15,24 @@ html {
 :root {
   --color-background: #ece3ce;
   --color-card: #4f6f52;
+  --color-card-font: antiquewhite;
+  --color-primary-btn: #f4b115;
+  --color-secondary-btn: rgb(245, 245, 245);
 }
 
 body {
-  margin: 0;
+  /* margin: 0; */
   font-family: "Merriweather", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--color-background);
   min-height: 100vh;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
 }

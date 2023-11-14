@@ -1,0 +1,29 @@
+.primary-btn {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.7rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 2rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary-color {
+  background-color: var(--color-primary-btn);
+}
+
+.secondary-color {
+  background-color: var(--color-secondary-btn);
+}
+
+@media screen and (min-width: 768px) {
+  .primary-btn {
+    font-size: 1.7rem;
+    padding: 1rem;
+  }
+}

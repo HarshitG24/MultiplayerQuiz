@@ -1,0 +1,18 @@
+#card {
+  background-color: var(--color-card);
+  width: 90%;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 481px) {
+  #card {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 1201px) {
+  #card {
+    width: 60%;
+  }
+}

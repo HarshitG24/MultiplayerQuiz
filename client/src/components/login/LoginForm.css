@@ -1,0 +1,108 @@
+#login-form {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  color: var(--color-card-font);
+}
+
+.login-image {
+  width: 100%;
+  height: 100%;
+}
+
+.form-control {
+  padding: 1rem;
+  margin: 1rem 3rem;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.form-imput {
+  border: none;
+  background: none;
+  outline: none;
+  border-bottom: 0.1rem solid var(--color-card-font);
+  width: 100%;
+  color: var(--color-card-font);
+  margin: 1.5rem 0;
+  font-size: 1.5rem;
+}
+
+.form-imput::placeholder {
+  color: var(--color-card-font);
+}
+
+.login-options {
+  margin: 1rem auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sign-up {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.sign-up label {
+  font-size: 1.2rem;
+}
+
+.sign-up button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: none;
+  color: var(--color-primary-btn);
+  font-weight: 800;
+  margin-left: 0.3rem;
+}
+
+@media screen and (min-width: 768px) {
+  .form-imput {
+    margin: 1.7rem 0;
+    font-size: 2rem;
+  }
+  .sign-up label {
+    font-size: 1.8rem;
+  }
+  .sign-up button {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .form-imput {
+    margin: 2rem 0;
+    font-size: 1.7rem;
+  }
+  .sign-up label {
+    font-size: 1.7rem;
+  }
+  .sign-up button {
+    font-size: 1.7rem;
+  }
+}
+
+@media screen and (min-width: 1201px) {
+  #login-form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-imput {
+    margin: 2rem 0;
+    font-size: 2rem;
+  }
+
+  .login-options {
+    flex-direction: column;
+    width: 50%;
+  }
+  .login-options button {
+    margin: 1rem 0;
+  }
+}
