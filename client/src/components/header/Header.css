@@ -3,8 +3,36 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 }
 
 .header-container h1 {
   color: var(--color-header-title);
+}
+
+.join-btn {
+  width: 25%;
+}
+
+@media screen and (min-width: 768px) {
+  .join-btn {
+    width: 10%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .join-btn {
+    width: 12%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .header-container {
+    padding: 1.5rem 3rem;
+  }
+
+  .join-btn {
+    width: 5%;
+  }
 }

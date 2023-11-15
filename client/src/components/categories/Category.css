@@ -1,7 +1,7 @@
 .categories-container {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 85%;
   margin: 2rem auto;
   color: #f3e7d4;
 }
@@ -22,7 +22,7 @@ h3 {
 .product {
   display: flex;
   flex-direction: column;
-  background: #5f4e33;
+  background: var(--color-card);
   height: 100%;
   position: relative;
   border-radius: 2rem;
@@ -86,6 +86,9 @@ h3 {
   .category-details > p {
     font-size: 1.5rem;
   }
+  .all-categories {
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  }
 }
 
 @media screen and (min-width: 1024px) {
@@ -95,6 +98,10 @@ h3 {
 }
 
 @media screen and (min-width: 1200px) {
+  .categories-container {
+    width: 70%;
+  }
+
   .all-categories {
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   }

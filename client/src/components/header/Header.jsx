@@ -15,7 +15,7 @@ export default function Header() {
       <JoinGameModal ref={joinDialog} />
       <div className="header-container">
         <h1>QuizScript</h1>
-        <div>
+        <div className="join-btn">
           <PrimaryButton onClick={handleJoin}>Join</PrimaryButton>
         </div>
       </div>

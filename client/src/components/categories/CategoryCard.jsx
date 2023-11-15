@@ -11,9 +11,6 @@ export default function CategoryCard({ categoryData }) {
   const dialog = useRef();
 
   function handleStartGame(category) {
-    // dispatch(gameActions.setModalType("start"));
-    // dispatch(gameActions.toggleModal());
-
     dispatch(categoryActions.addCategory(category));
     dialog.current.open();
   }
@@ -30,7 +27,9 @@ export default function CategoryCard({ categoryData }) {
               className="category-image"
             />
             <div className="category-details">
-              <PageHeader>{category}</PageHeader>
+              <PageHeader style={{ color: "var(--color-header-title)" }}>
+                {category}
+              </PageHeader>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
                 debitis esse voluptatem commodi modi reprehenderit vitae iusto
@@ -40,7 +39,6 @@ export default function CategoryCard({ categoryData }) {
             </div>
             <div className="start-game">
               <PrimaryButton onClick={handleStartGame.bind(this, category)}>
-                {/* handleStartGame.bind(this, category) */}
                 Start
               </PrimaryButton>
             </div>
