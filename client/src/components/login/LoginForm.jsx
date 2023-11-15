@@ -74,7 +74,9 @@ export default function LoginForm() {
           </div>
           <div className="form-control">
             <div className="title">
-              <PageHeader>QuizScript</PageHeader>
+              <PageHeader style={{ color: "var(--color-header-title)" }}>
+                QuizScript
+              </PageHeader>
             </div>
             {validationErrors !== "" && <Error>{validationErrors}</Error>}
             <div>

@@ -60,7 +60,9 @@ export default function SignUpForm() {
       <div className="signup-container">
         {validationErrors !== "" && <Error>{validationErrors}</Error>}
         <div className="signup-header">
-          <PageHeader>Create Account</PageHeader>
+          <PageHeader style={{ color: "var(--color-header-title)" }}>
+            Create Account
+          </PageHeader>
           <p>We just need a few details</p>
         </div>
         <div className="input-container">

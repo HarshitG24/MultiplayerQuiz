@@ -1,0 +1,10 @@
+.header-container {
+  background-color: #45474b;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.header-container h1 {
+  color: var(--color-header-title);
+}

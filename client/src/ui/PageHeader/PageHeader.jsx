@@ -1,5 +1,5 @@
 import "./PageHeader.css";
 
-export default function PageHeader({ children }) {
-  return <h2>{children}</h2>;
+export default function PageHeader({ style, children }) {
+  return <h2 style={style}>{children}</h2>;
 }

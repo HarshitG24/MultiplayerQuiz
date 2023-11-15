@@ -29,7 +29,7 @@ export default function Categories() {
         <div className="all-categories">
           <CategoryCard categoryData={data} />
         </div>
-        {open && <StartGame />}
+        {/* {open && <StartGame />} */}
       </div>
     </>
   );
