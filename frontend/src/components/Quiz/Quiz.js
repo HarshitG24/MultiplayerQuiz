@@ -11,7 +11,7 @@ const FETCH_QUIZ_DATA = gql`
   query ($code: Int!) {
     fetchQuizData(code: $code) {
       category
-      questions {
+      questrions {
         question
         options
         ans

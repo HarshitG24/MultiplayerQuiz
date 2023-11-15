@@ -1,6 +1,6 @@
 import PrimaryButton from "../../ui/PrimaryButton/PrimaryButton";
 import "./Header.css";
-import JoinGameModal from "../../ui/modal/JoinGameModal";
+import JoinGameModal from "../modal/JoinGameModal";
 import { useRef } from "react";
 
 export default function Header() {

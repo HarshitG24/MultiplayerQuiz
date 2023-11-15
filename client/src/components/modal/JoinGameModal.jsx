@@ -38,7 +38,7 @@ const modal = forwardRef(function JoinGameModal(props, ref) {
         email,
       },
     })
-      .then(() => {
+      .then((resp) => {
         dispatch(gameActions.setGameCode(+gameCode.current.value));
         dispatch(categoryActions.setUser("user2"));
         navigate("/quiz");

@@ -1,10 +1,9 @@
 import { useDispatch } from "react-redux";
-import { gameActions } from "../../store/slices/game-slice";
 import { categoryActions } from "../../store/slices/category-slice";
 import PageHeader from "../../ui/PageHeader/PageHeader";
 import PrimaryButton from "../../ui/PrimaryButton/PrimaryButton";
 import gown from "../../assets/dream-gown.jpg";
-import GameModal from "../../ui/modal/GameModal";
+import GameModal from "../modal/GameModal";
 import { useRef } from "react";
 
 export default function CategoryCard({ categoryData }) {
