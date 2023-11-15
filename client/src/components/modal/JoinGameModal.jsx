@@ -32,14 +32,16 @@ const modal = forwardRef(function JoinGameModal(props, ref) {
   });
 
   function handleJoinGame() {
+    let code = +gameCode.current.value;
+    console.log("code in join is: ", code);
     joinResp({
       variables: {
-        code: +gameCode.current.value,
+        code,
         email,
       },
     })
-      .then((resp) => {
-        dispatch(gameActions.setGameCode(+gameCode.current.value));
+      .then(() => {
+        dispatch(gameActions.setGameCode(code));
         dispatch(categoryActions.setUser("user2"));
         navigate("/quiz");
       })

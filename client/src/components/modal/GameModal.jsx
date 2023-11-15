@@ -19,17 +19,18 @@ const modal = forwardRef(function GameModal(props, ref) {
   const dialog = useRef();
   const dispatch = useDispatch();
   const email = useSelector((state) => state.auth.email);
-  const category = useSelector((state) => state.category.selectedCategory);
+  // const category = useSelector((state) => state.category.selectedCategory);
   const [code, setGameCode] = useState("");
   const [startResp] = useMutation(START_GAME);
 
   useImperativeHandle(ref, () => {
     return {
-      open() {
+      open(category) {
         dialog.current.showModal();
         const gameCode = generateGameCode();
         setGameCode(gameCode);
-        handleStartGame(gameCode);
+        handleStartGame(gameCode, category);
+        dispatch(categoryActions.addCategory(category));
       },
     };
   });
@@ -38,7 +39,8 @@ const modal = forwardRef(function GameModal(props, ref) {
     return Math.floor(1000 + Math.random() * 9000);
   }
 
-  function handleStartGame(gameCode) {
+  function handleStartGame(gameCode, category) {
+    console.log("the details are: ", gameCode, email, category);
     startResp({
       variables: {
         code: gameCode,
@@ -46,9 +48,9 @@ const modal = forwardRef(function GameModal(props, ref) {
         category,
       },
     }).then(() => {
-      dispatch(categoryActions.addCategory(category));
+      // dispatch(categoryActions.addCategory(category));
       dispatch(categoryActions.setUser("user1"));
-      dispatch(gameActions.setGameCode(code));
+      dispatch(gameActions.setGameCode(gameCode));
     });
   }
 

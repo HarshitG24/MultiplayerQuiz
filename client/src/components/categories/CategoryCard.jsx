@@ -11,8 +11,9 @@ export default function CategoryCard({ categoryData }) {
   const dialog = useRef();
 
   function handleStartGame(category) {
+    console.log("the category is: ", category);
     dispatch(categoryActions.addCategory(category));
-    dialog.current.open();
+    dialog.current.open(category);
   }
 
   return (

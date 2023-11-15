@@ -31,7 +31,7 @@ export default function StartGameCode({ code }) {
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
         const users = subscriptionData.data?.gameOn?.users;
-        console.log("the users are: ", users);
+        console.log("the users are: ", subscriptionData.data);
         if (users.length === 2) {
           navigate("/quiz");
         }

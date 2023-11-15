@@ -5,6 +5,7 @@ const categorySlice = createSlice({
   initialState: { selectedCategory: "", user: "" },
   reducers: {
     addCategory(state, action) {
+      console.log("the payload is: ", action.payload);
       state.selectedCategory = action.payload;
     },
     setUser(state, action) {
