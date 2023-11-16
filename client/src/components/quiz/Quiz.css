@@ -1,15 +1,44 @@
 .quiz-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   height: 100vh;
-  margin-top: 10%;
+}
+
+.scores {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.individual-score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.individual-score label {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.individual-score p {
+  font-size: 1.2rem;
 }
 
 .quiz-card-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40%;
+  width: 80%;
   margin: 2rem auto;
-  background: #5f4e33;
+  /* background: var(--color-card); */
+  background: #e1c78f;
   padding: 2rem;
   flex-direction: column;
   border-radius: 1rem;
@@ -17,7 +46,8 @@
 
 .question {
   font-size: 1.5rem;
-  color: #fbd392;
+  /* color: #fbd392; */
+  color: #3a4d39;
   font-weight: 700;
 }
 
@@ -43,11 +73,13 @@ button > p {
 }
 
 .my-answer {
-  background-color: orange;
+  /* background-color: orange; */
+  background-color: #ed7d31;
 }
 
 .opponent-answer {
-  background-color: yellow;
+  /* background-color: yellow; */
+  background-color: var(--color-secondary-btn);
 }
 
 .correct-answer {
@@ -68,4 +100,109 @@ button > p {
 
 .waiting {
   opacity: 0.5;
+}
+
+@media screen and (min-width: 768px) {
+  .scores {
+    width: 80%;
+    padding: 4rem auto;
+  }
+
+  .individual-score label {
+    font-size: 1.8rem;
+  }
+
+  .individual-score p {
+    font-size: 1.5rem;
+  }
+
+  .question {
+    font-size: 1.8rem;
+  }
+
+  .options {
+    margin-top: 1.8rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .option {
+    width: 80%;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  button > p {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .scores {
+    width: 70%;
+    padding: 5rem auto;
+  }
+
+  .individual-score label {
+    font-size: 2rem;
+  }
+
+  .individual-score p {
+    font-size: 1.7rem;
+  }
+
+  .question {
+    font-size: 2rem;
+  }
+
+  .options {
+    margin-top: 2rem;
+  }
+
+  .option {
+    padding: 1.7rem;
+    margin: 2rem 0;
+  }
+
+  button > p {
+    font-size: 1.7rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .quiz-card-container {
+    width: 50%;
+  }
+  .scores {
+    width: 50%;
+    padding: 5rem auto;
+  }
+
+  .individual-score label {
+    font-size: 2rem;
+  }
+
+  .individual-score p {
+    font-size: 1.7rem;
+  }
+
+  .question {
+    font-size: 2rem;
+  }
+
+  .options {
+    margin-top: 2rem;
+  }
+
+  .option {
+    padding: 1.7rem;
+    margin: 1.5rem 0;
+  }
+
+  button > p {
+    font-size: 1.7rem;
+  }
 }

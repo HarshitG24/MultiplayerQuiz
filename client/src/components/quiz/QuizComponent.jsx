@@ -105,20 +105,22 @@ export default function QuizComponent() {
   if (index > 4) return;
 
   return (
-    <div className="quiz-container">
-      {fetchedQuestions && fetchedQuestions.length > 0 && (
-        <QuizCard data={fetchedQuestions[index]} />
-      )}
-      <div>
-        <div>
-          <p>Your Score</p>
-          <p>{currentScore}</p>
+    <>
+      <div className="quiz-container">
+        <div className="scores">
+          <div className="individual-score">
+            <label>Your Score</label>
+            <p>{currentScore}</p>
+          </div>
+          <div className="individual-score">
+            <label>Opponent Score</label>
+            <p>{opponentScore}</p>
+          </div>
         </div>
-        <div>
-          <p>Opponent Score</p>
-          <p>{opponentScore}</p>
-        </div>
+        {fetchedQuestions && fetchedQuestions.length > 0 && (
+          <QuizCard data={fetchedQuestions[index]} />
+        )}
       </div>
-    </div>
+    </>
   );
 }
