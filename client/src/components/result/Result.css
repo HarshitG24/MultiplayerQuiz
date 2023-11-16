@@ -1,0 +1,44 @@
+.result-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 3rem;
+}
+
+.result-container h2 {
+  font-size: 3rem;
+}
+
+.award {
+  width: 60%;
+  height: 60%;
+  margin-top: 2rem;
+}
+
+.result-container-button {
+  margin-top: 2rem;
+}
+
+.result-container label {
+  margin-top: 3rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .award {
+    width: 30%;
+    height: 30%;
+    margin-top: 2rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .award {
+    width: 15%;
+    height: 15%;
+    margin-top: 2rem;
+  }
+}

@@ -29,7 +29,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: var(--color-background);
   min-height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 main {
@@ -37,7 +37,7 @@ main {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 
 .result-modal {
