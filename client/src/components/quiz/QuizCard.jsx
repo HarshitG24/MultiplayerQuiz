@@ -1,7 +1,8 @@
 import { gql, useMutation } from "@apollo/client";
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { quizActions } from "../../store/slices/quiz-slice";
+import ComponentTimer from "./ComponentTimer";
 
 const ADD_ANSWER = gql`
   mutation (
@@ -28,6 +29,7 @@ export default function QuizCard({ data }) {
   const { question, options, ans } = data;
 
   const dispatch = useDispatch();
+  const index = useSelector((state) => state.quiz.index);
   const user = useSelector((state) => state.category.user);
   const code = useSelector((state) => state.game.code);
   const currentScore = useSelector((state) => state.quiz.currentScore);
@@ -48,9 +50,27 @@ export default function QuizCard({ data }) {
     });
   }
 
+  const handleSkipAnswer = () => {
+    dispatch(quizActions.setAnswer("NULL"));
+    submitAnswer({
+      variables: {
+        code,
+        user,
+        answer: "NULL",
+        score: currentScore,
+        question: index,
+      },
+    });
+  };
+
   return (
     <div className="quiz-card-container">
-      <div>TIMER SLIDER</div>
+      {/* <div>TIMER SLIDER</div> */}
+      <ComponentTimer
+        timeout={15000}
+        onTimeOut={handleSkipAnswer}
+        key={question}
+      />
       <hr />
       <p className="question">{question}</p>
 
