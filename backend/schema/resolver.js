@@ -14,6 +14,11 @@ const resolvers = {
       return userData;
     },
 
+    async fetchCategories(_, args) {
+      const categoryData = await dbConnector.getCategories();
+      return categoryData;
+    },
+
     async questions(_, args) {
       const resp = await dbConnector.getQuestions();
       const questions = resp.questionBank;

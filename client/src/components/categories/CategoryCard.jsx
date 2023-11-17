@@ -11,7 +11,6 @@ export default function CategoryCard({ categoryData }) {
   const dialog = useRef();
 
   function handleStartGame(category) {
-    console.log("the category is: ", category);
     dispatch(categoryActions.addCategory(category));
     dialog.current.open(category);
   }
@@ -20,10 +19,11 @@ export default function CategoryCard({ categoryData }) {
     <>
       <GameModal ref={dialog} />
       {categoryData &&
-        categoryData.questions.map(({ category }) => (
+        categoryData.map(({ category, imageUrl, description }) => (
           <div className="product" key={category}>
             <img
-              src={gown}
+              // src={gown}
+              src={imageUrl}
               alt="This is the topic illustration"
               className="category-image"
             />
@@ -31,12 +31,7 @@ export default function CategoryCard({ categoryData }) {
               <PageHeader style={{ color: "var(--color-header-title)" }}>
                 {category}
               </PageHeader>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
-                debitis esse voluptatem commodi modi reprehenderit vitae iusto
-                harum! Nulla, fugit repudiandae! Numquam nihil voluptas
-                perspiciatis ex praesentium, qui nobis corrupti?
-              </p>
+              <p>{description}</p>
             </div>
             <div className="start-game">
               <PrimaryButton onClick={handleStartGame.bind(this, category)}>

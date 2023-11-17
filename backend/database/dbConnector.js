@@ -135,6 +135,24 @@ function dbConnector() {
       };
     }
   };
+  dbObj.getCategories = async () => {
+    await client.connect();
+
+    try {
+      const resp = await categories.find().toArray();
+      const catData = (resp || []).map((data) => {
+        return {
+          category: data.category,
+          imageUrl: data.image_url,
+          description: data.description,
+        };
+      });
+
+      return catData;
+    } catch (error) {
+      return [];
+    }
+  };
 
   dbObj.getQuizData = async ({ code }) => {
     await client.connect();

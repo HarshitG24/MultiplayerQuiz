@@ -3,16 +3,18 @@ import "./Category.css";
 import CategoryCard from "./CategoryCard";
 import { gql, useQuery } from "@apollo/client";
 
-const categories = gql`
+const CATEGORIES = gql`
   query {
-    questions {
+    fetchCategories {
       category
+      imageUrl
+      description
     }
   }
 `;
 
 export default function CategoriesComponent() {
-  const { loading, error, data } = useQuery(categories);
+  const { loading, error, data } = useQuery(CATEGORIES);
 
   if (loading) return "Loading..";
   if (error) return `${error.message}`;
@@ -24,7 +26,7 @@ export default function CategoriesComponent() {
           Categories
         </PageHeader>
         <div className="all-categories">
-          <CategoryCard categoryData={data} />
+          <CategoryCard categoryData={data.fetchCategories} />
         </div>
       </div>
     </>

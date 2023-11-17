@@ -49,9 +49,16 @@ const typeDefs = `
         email: String!
     }
 
+    type CategoryData {
+        category: String!
+        imageUrl: String!
+        description: String!
+    }
+
     type Query {
         users: [User!]
         questions: [Questions!]!
+        fetchCategories: [CategoryData!]
         fetchQuizData(code: Int!): QuizData!
         getUsers(code: Int!): [String!]!
     }
