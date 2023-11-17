@@ -18,8 +18,8 @@ export default function ResultComponent() {
       )}
       <label>{`${
         currentScore > opponentScore
-          ? "Don't give up! Better luck next time"
-          : "Well Done! Continue your winning streak in future"
+          ? "Well Done! Continue your winning streak in future"
+          : "Don't give up! Better luck next time"
       }`}</label>
       <div className="result-container-button">
         <PrimaryButton type="primary">Go to DashBoard</PrimaryButton>
