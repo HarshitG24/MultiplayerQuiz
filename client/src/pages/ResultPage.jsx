@@ -5,7 +5,6 @@ import Header from "../components/header/Header";
 export default function ResultPage() {
   return (
     <>
-      {/* <Header /> */}
       <ResultComponent />
     </>
   );

@@ -16,7 +16,11 @@ export default function ResultComponent() {
       ) : (
         <img src={failed} alt="This is trophy icon" className="award" />
       )}
-      <label>Don't give up! Better luck next time</label>
+      <label>{`${
+        currentScore > opponentScore
+          ? "Don't give up! Better luck next time"
+          : "Well Done! Continue your winning streak in future"
+      }`}</label>
       <div className="result-container-button">
         <PrimaryButton type="primary">Go to DashBoard</PrimaryButton>
       </div>

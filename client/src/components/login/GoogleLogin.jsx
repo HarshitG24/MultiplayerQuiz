@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { SIGN_UP_GOOGLE } from "./mutation.js";
 import { useMutation } from "@apollo/client";
+import { setJWT } from "../../util/auth";
 
 export default function GoogleLogin() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function GoogleLogin() {
       signUpGoogle({ variables: { accessToken } }).then((res) => {
         const { data } = res;
         if (data.signUpGoogle.email !== "") {
+          setJWT(data.signUpGoogle.accessToken);
           dispatch(authActions.setEmail(data.signUpGoogle.email));
           naviagte("categories");
         }

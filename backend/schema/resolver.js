@@ -3,6 +3,7 @@ import { PubSub } from "graphql-subscriptions";
 import { authenticateGoogle } from "../auth/auth.js";
 import "../auth/auth.js";
 import { hasMinLength, isEmail, passwordEqual } from "../util/validation.js";
+import { createJSONToken, validateJWTToken } from "../auth/token.js";
 
 const pubSub = new PubSub();
 
@@ -148,7 +149,7 @@ const resolvers = {
 
         return {
           email,
-          accessToken: `Bearer ${accessToken}`,
+          accessToken: createJSONToken(email),
           refreshToken: `Bearer ${refreshToken}`,
         };
         // }
@@ -160,10 +161,21 @@ const resolvers = {
       }
     },
 
-    // async addQuestions(_, args) {
-    //   const resp = await dbConnector.questionByCategory(args);
-    //   return resp;
-    // },
+    verifyJWT: (_, { token }) => {
+      const resp = validateJWTToken(token);
+
+      if (resp === undefined) {
+        return {
+          statusCode: 400,
+          message: "Expired",
+        };
+      }
+
+      return {
+        statusCode: 200,
+        message: "success",
+      };
+    },
   },
 
   Subscription: {

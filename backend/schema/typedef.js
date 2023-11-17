@@ -63,6 +63,7 @@ const typeDefs = `
         joinGame(code: Int!, email: String!): Game!
         addAnswer(code: Int!, user: String!, answer: String!, score: Int!, question: Int!): Answer!
         signUpGoogle(accessToken: String!): AuthResponse
+        verifyJWT(token: String!): ApiResponse!
     }
 
     type Subscription {
