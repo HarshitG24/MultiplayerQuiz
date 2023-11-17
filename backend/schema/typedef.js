@@ -51,7 +51,7 @@ const typeDefs = `
 
     type CategoryData {
         category: String!
-        imageUrl: String!
+        image_url: String!
         description: String!
     }
 

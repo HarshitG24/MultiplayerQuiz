@@ -139,16 +139,16 @@ function dbConnector() {
     await client.connect();
 
     try {
-      const resp = await categories.find().toArray();
-      const catData = (resp || []).map((data) => {
-        return {
-          category: data.category,
-          imageUrl: data.image_url,
-          description: data.description,
-        };
-      });
+      const resp = await categories
+        .find(
+          {},
+          { projection: { category: 1, image_url: 1, description: 1, _id: 0 } }
+        )
+        .toArray();
 
-      return catData;
+      console.log(resp);
+
+      return resp;
     } catch (error) {
       return [];
     }
