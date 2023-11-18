@@ -5,6 +5,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  width: 100%;
+  z-index: 20;
+  position: fixed;
+  top: 0;
 }
 
 .header-container h1 {

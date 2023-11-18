@@ -63,6 +63,8 @@ h3 {
 }
 
 .start-game {
+  z-index: 1;
+
   display: flex;
   justify-content: flex-end;
   /* padding: 2rem; */
