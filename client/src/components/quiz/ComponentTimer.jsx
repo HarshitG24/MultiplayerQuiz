@@ -22,5 +22,9 @@ export default function ComponentTimer({ timeout, onTimeOut }) {
     };
   }, []);
 
-  return <progress id="question-time" max={timeout} value={remainingTime} />;
+  return (
+    <div id="question-time">
+      <progress max={timeout} value={remainingTime} />
+    </div>
+  );
 }

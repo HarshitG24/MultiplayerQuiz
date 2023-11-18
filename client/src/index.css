@@ -20,6 +20,10 @@ html {
   --color-secondary-btn: rgb(245, 245, 245);
   --color-header-title: #f4bf96;
   --color-page-title: #186f65;
+  --color-quiz-background: #ebf3e8;
+  --color-my-ans: #ed7d31;
+  --color-opponent-ans: #ce5a67;
+  --color-correct-ans: green;
 }
 
 body {

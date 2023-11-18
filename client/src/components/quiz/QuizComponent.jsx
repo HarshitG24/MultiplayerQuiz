@@ -108,11 +108,11 @@ export default function QuizComponent() {
     <>
       <div className="quiz-container">
         <div className="scores">
-          <div className="individual-score">
+          <div className="individual-score my-ans">
             <label>Your Score</label>
             <p>{currentScore}</p>
           </div>
-          <div className="individual-score">
+          <div className="individual-score opponent-ans">
             <label>Opponent Score</label>
             <p>{opponentScore}</p>
           </div>

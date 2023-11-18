@@ -65,7 +65,6 @@ export default function QuizCard({ data }) {
 
   return (
     <div className="quiz-card-container">
-      {/* <div>TIMER SLIDER</div> */}
       <ComponentTimer
         timeout={15000}
         onTimeOut={handleSkipAnswer}

@@ -23,12 +23,12 @@
 }
 
 .individual-score label {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 800;
 }
 
 .individual-score p {
-  font-size: 1.2rem;
+  font-size: 1.8rem;
 }
 
 .quiz-card-container {
@@ -38,7 +38,7 @@
   width: 80%;
   margin: 2rem auto;
   /* background: var(--color-card); */
-  background: #e1c78f;
+  background: #3a4d39;
   padding: 2rem;
   flex-direction: column;
   border-radius: 1rem;
@@ -47,7 +47,8 @@
 .question {
   font-size: 1.5rem;
   /* color: #fbd392; */
-  color: #3a4d39;
+  /* color: #3a4d39; */
+  color: var(--color-header-title);
   font-weight: 700;
 }
 
@@ -60,7 +61,7 @@
   padding: 1rem;
   width: 100%;
   margin: 1rem 0;
-  background: #de8f5f;
+  background: var(--color-quiz-background);
   border: none;
   outline: none;
   border-radius: 2rem;
@@ -73,17 +74,23 @@ button > p {
 }
 
 .my-answer {
-  /* background-color: orange; */
-  background-color: #ed7d31;
+  background-color: var(--color-my-ans);
 }
 
 .opponent-answer {
-  /* background-color: yellow; */
-  background-color: var(--color-secondary-btn);
+  background-color: var(--color-opponent-ans);
 }
 
 .correct-answer {
-  background-color: green;
+  background-color: var(--color-correct-ans);
+}
+
+.my-ans {
+  color: var(--color-my-ans);
+}
+
+.opponent-ans {
+  color: var(--color-opponent-ans);
 }
 
 .button-selected {
@@ -109,11 +116,11 @@ button > p {
   }
 
   .individual-score label {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 
   .individual-score p {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 
   .question {
@@ -138,6 +145,29 @@ button > p {
   button > p {
     font-size: 1.5rem;
   }
+}
+
+.quiz-card-container progress {
+  width: 100%;
+  height: 0.5rem;
+  border-radius: 24px;
+  background: #f5e8c7;
+  margin: 0;
+}
+
+.quiz-card-container progress::-webkit-progress-bar {
+  background: #fff0ce;
+  border-radius: 24px;
+}
+
+.quiz-card-container progress::-webkit-progress-value {
+  background: var(--color-primary-btn);
+  border-radius: 24px;
+}
+
+#question-time {
+  width: 100%;
+  margin: 2rem 0;
 }
 
 @media screen and (min-width: 1024px) {
