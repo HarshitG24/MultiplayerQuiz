@@ -1,16 +1,19 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import award from "../../assets/award.png";
 import failed from "../../assets/failed.png";
 import draw from "../../assets/draw.png";
 import PrimaryButton from "../../ui/PrimaryButton/PrimaryButton";
 import "./Result.css";
+import { quizActions } from "../../store/slices/quiz-slice";
 
 export default function ResultComponent() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const currentScore = useSelector((state) => state.quiz.currentScore);
   const opponentScore = useSelector((state) => state.quiz.opponentScore);
+  dispatch(quizActions.setCurrentIndex(0));
 
   function handleBtnClick() {
     navigate("/categories");
