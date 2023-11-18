@@ -22,6 +22,7 @@ import SignUpPage from "./pages/SignUpPage";
 import Quiz from "./pages/Quiz";
 import ResultPage from "./pages/ResultPage";
 import { action as logoutAction } from "./pages/Logout";
+import { checkAuth } from "./util/auth";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql",
@@ -64,6 +65,7 @@ const router = createBrowserRouter([
       {
         path: "categories",
         element: <CategoriesPage />,
+        loader: checkAuth,
       },
       {
         path: "signup",
@@ -72,10 +74,12 @@ const router = createBrowserRouter([
       {
         path: "quiz",
         element: <Quiz />,
+        loader: checkAuth,
       },
       {
         path: "result",
         element: <ResultPage />,
+        loader: checkAuth,
       },
       {
         path: "logout",

@@ -1,24 +1,13 @@
-import { gql, useMutation } from "@apollo/client";
 import { useEffect } from "react";
-import { Outlet, redirect, useSubmit } from "react-router-dom";
-import { getJWT, getTokenDuration } from "../util/auth";
-
-export const AUTHENTICATE = gql`
-  mutation ($token: String!) {
-    verifyJWT(token: $token) {
-      statusCode
-      message
-    }
-  }
-`;
+import { Outlet, useLoaderData, useSubmit } from "react-router-dom";
+import { getTokenDuration } from "../util/auth";
 
 export default function Root() {
-  const token = getJWT();
+  const token = useLoaderData();
   const submit = useSubmit();
-  const [authUser] = useMutation(AUTHENTICATE);
 
   useEffect(() => {
-    if (!token) {
+    if (!token || token === undefined) {
       return;
     }
 
@@ -28,14 +17,6 @@ export default function Root() {
     }
 
     const tokenDuration = getTokenDuration();
-
-    authUser({
-      variables: { token },
-    }).then((resp) => {
-      if (resp?.data?.verifyJWT?.statusCode === 400) {
-        return redirect("/");
-      }
-    });
 
     setTimeout(() => {
       submit(null, { action: "/logout", method: "post" });

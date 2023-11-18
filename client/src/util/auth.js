@@ -1,5 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 
 export function setJWT(token) {
   localStorage.setItem("token", token);
@@ -18,7 +17,7 @@ export function getTokenDuration() {
   return duration;
 }
 
-export function getJWT() {
+export function getAuthToken() {
   const token = localStorage.getItem("token");
 
   if (!token) return;
@@ -29,4 +28,16 @@ export function getJWT() {
     return "EXPIRED";
   }
   return token;
+}
+
+export function tokenLoader() {
+  return getAuthToken();
+}
+
+export function checkAuth() {
+  const token = getAuthToken();
+
+  if (!token) return redirect("/");
+
+  return null;
 }

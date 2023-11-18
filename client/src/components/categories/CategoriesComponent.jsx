@@ -1,8 +1,8 @@
 import PageHeader from "../../ui/PageHeader/PageHeader";
 import "./Category.css";
 import { gql, useQuery } from "@apollo/client";
-import CategoryCard from "./CategoryCard";
-import { LazyLoadComponent } from "react-lazy-load-image-component";
+import { lazy, Suspense } from "react";
+const LazyCardComponent = lazy(() => import("./CategoryCard"));
 
 const CATEGORIES = gql`
   query {
@@ -27,9 +27,9 @@ export default function CategoriesComponent() {
           Categories
         </PageHeader>
         <div className="all-categories">
-          <LazyLoadComponent>
-            <CategoryCard categoryData={data.fetchCategories} />
-          </LazyLoadComponent>
+          <Suspense fallback={<div>Loading...</div>}>
+            <LazyCardComponent categoryData={data.fetchCategories} />
+          </Suspense>
         </div>
       </div>
     </>

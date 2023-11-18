@@ -4,10 +4,12 @@ import PageHeader from "../../ui/PageHeader/PageHeader";
 import PrimaryButton from "../../ui/PrimaryButton/PrimaryButton";
 import GameModal from "../modal/GameModal";
 import { useRef } from "react";
-// import { useInView } from "react-intersection-observer";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import {
+  LazyLoadImage,
+  trackWindowScroll,
+} from "react-lazy-load-image-component";
 
-export default function CategoryCard({ categoryData }) {
+function CategoryCard({ categoryData, scrollPosition }) {
   const dispatch = useDispatch();
   const dialog = useRef();
 
@@ -15,16 +17,6 @@ export default function CategoryCard({ categoryData }) {
     dispatch(categoryActions.addCategory(category));
     dialog.current.open(category);
   }
-
-  // const LazyLoadedImage = ({ src }) => {
-  //   const [ref, inView] = useInView({
-  //     triggerOnce: true,
-  //   });
-
-  //   return (
-  //     <img ref={ref} src={inView ? src : ""} alt="this is category banner" />
-  //   );
-  // };
 
   return (
     <>
@@ -38,13 +30,8 @@ export default function CategoryCard({ categoryData }) {
               alt="this is category logo"
               effect="blur"
               src={image_url}
+              scrollPosition={scrollPosition}
             />
-            {/* <img
-              src={image_url}
-              alt="This is the topic illustration"
-              className="category-image"
-            /> */}
-            {/* <LazyLoadedImage src={image_url} /> */}
             <div className="category-details">
               <PageHeader style={{ color: "var(--color-header-title)" }}>
                 {category}
@@ -61,3 +48,5 @@ export default function CategoryCard({ categoryData }) {
     </>
   );
 }
+
+export default trackWindowScroll(CategoryCard);
