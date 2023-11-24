@@ -19,7 +19,7 @@ const schema = makeExecutableSchema({ typeDefs, resolvers });
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:5173", // Replace with your frontend's URL
+  origin: "*", // Replace with your frontend's URL
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
 };
@@ -64,27 +64,6 @@ const apolloServer = new ApolloServer({
     },
   ],
 });
-
-// (async function () {
-//   // starting the apollo server to expose endoint to client
-//   await apolloServer.start();
-//   app.use(
-//     "/graphql",
-//     bodyParser.json(),
-//     expressMiddleware(apolloServer, {
-//       context: async ({ req, res }) => {
-//         return {
-//           req,
-//           res,
-//         };
-//       },
-//     })
-//   );
-// })();
-
-// httpServer.listen(PORT, () => {
-//   console.log(`🚀 Query endpoint ready at http://localhost:${PORT}/graphql`);
-// });
 
 await apolloServer.start();
 

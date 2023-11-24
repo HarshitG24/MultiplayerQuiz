@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --trace-warnings server.js"
+    "start": "node --trace-warnings server.js"
   },
   "keywords": [],
   "author": "",
@@ -32,5 +32,8 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.34.0",
     "ws": "^8.14.2"
+  },
+  "engines": {
+    "node": ">=18.18.0 < 19.0.0"
   }
 }
