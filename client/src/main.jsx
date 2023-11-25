@@ -25,7 +25,7 @@ import { action as logoutAction } from "./pages/Logout";
 import { checkAuth } from "./util/auth";
 
 const httpLink = new HttpLink({
-  uri: `http://${import.meta.env.VITE_BACKEND_URL}`,
+  uri: `https://${import.meta.env.VITE_BACKEND_URL}`,
 });
 
 const wsLink = new GraphQLWsLink(
