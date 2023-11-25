@@ -81,6 +81,18 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    process.env.DEP_LINK || "http://localhost:3000"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 function isLoggedIn(req, res, next) {
   req.user ? next() : res.sendStatus(401);
 }
@@ -114,4 +126,4 @@ app.get("/protected", isLoggedIn, (req, res) => {
 });
 
 // Modified server startup
-await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
