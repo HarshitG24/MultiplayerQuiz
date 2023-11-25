@@ -30,7 +30,7 @@ const httpLink = new HttpLink({
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: `ws://${import.meta.env.VITE_BACKEND_URL}`,
+    url: `wss://${import.meta.env.VITE_BACKEND_URL}`,
   })
 );
 
